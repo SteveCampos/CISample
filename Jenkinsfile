@@ -9,7 +9,7 @@ pipeline {
   }
 
   tools {
-    jdk 'JDK8_Mac' 
+    jdk 'JDK11_Mac'
   }
 
 
@@ -43,6 +43,9 @@ pipeline {
       echo '------------>Análisis de código estático<------------'
       withSonarQubeEnv('Sonar') {
         sh "${tool name: 'SonarScanner-Mac', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
+
+        echo "SONAR_HOST_URL:$SONAR_HOST_URL"
+        echo "SONAR_AUTH_TOKEN:$SONAR_AUTH_TOKEN"
       }
     }
   }
@@ -51,6 +54,7 @@ pipeline {
 
   post {
     always {
+      echo "currentPipelineBuild: ${currentBuild.fullDisplayName}"
       echo 'This will always run'
     }
     success {
