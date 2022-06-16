@@ -9,7 +9,7 @@ pipeline {
   }
 
   tools {
-    jdk 'JDK8_Mac' 
+    jdk 'JDK11_Mac'
   }
 
 
@@ -51,6 +51,7 @@ pipeline {
 
   post {
     always {
+      echo "currentPipelineBuild: ${currentBuild.fullDisplayName}"
       echo 'This will always run'
     }
     success {
