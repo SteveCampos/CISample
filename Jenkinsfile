@@ -4,7 +4,7 @@ pipeline {
   }
 
   options {
-    	buildDiscarder(logRotator(numToKeepStr: '3'))
+    buildDiscarder(logRotator(numToKeepStr: '3'))
  	disableConcurrentBuilds()
   }
 
@@ -59,7 +59,7 @@ pipeline {
     }
     success {
       echo 'This will run only if successful'
-      junit 'app/build/test-results/test/*.xml' //RUTA DE TUS ARCHIVOS .XML, SI LOS ARCHIVOS NO EXISTEN ESTA INSTRUCCIÓN FALLARÁ
+      junit allowEmptyResults: true, testResults: '**/test-results/*.xml' //RUTA DE TUS ARCHIVOS .XML, SI LOS ARCHIVOS NO EXISTEN ESTA INSTRUCCIÓN FALLARÁ
         mail (to: 'steve.campos@ceiba.com.co',subject: "Failed Pipeline:${currentBuild.fullDisplayName}",body: "Something is wrong with ${env.BUILD_URL}")
     }
     failure {
