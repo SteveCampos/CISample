@@ -59,8 +59,8 @@ pipeline {
     }
     success {
       echo 'This will run only if successful'
-      junit allowEmptyResults: true, testResults: '**/test-results/*.xml' //RUTA DE TUS ARCHIVOS .XML, SI LOS ARCHIVOS NO EXISTEN ESTA INSTRUCCIÓN FALLARÁ
-        mail (to: 'steve.campos@ceiba.com.co',subject: "Failed Pipeline:${currentBuild.fullDisplayName}",body: "Something is wrong with ${env.BUILD_URL}")
+      junit allowEmptyResults: true, testResults: 'app/build/test-results/*.xml' //RUTA DE TUS ARCHIVOS .XML, SI LOS ARCHIVOS NO EXISTEN ESTA INSTRUCCIÓN FALLARÁ
+        mail (to: 'steve.campos@ceiba.com.co',subject: "Success Pipeline:${currentBuild.fullDisplayName}",body: "Success pipeline ${env.BUILD_URL}")
     }
     failure {
       echo 'This will run only if failed'
