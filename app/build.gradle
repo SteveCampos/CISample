@@ -63,8 +63,8 @@ task jacocoTestReport(type: JacocoReport,
     description = "Generate Jacoco coverage reports for Debug build"
 
     reports {
-        xml.enabled(true)
-        html.enabled(true)
+        xml.required = true
+        html.required = true
     }
 
     def excludes = ['**/R.class',
