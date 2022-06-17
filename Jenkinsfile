@@ -59,7 +59,7 @@ pipeline {
     }
     success {
       echo 'This will run only if successful'
-      junit allowEmptyResults: true, testResults: 'app/build/test-results/*.xml' //RUTA DE TUS ARCHIVOS .XML, SI LOS ARCHIVOS NO EXISTEN ESTA INSTRUCCIÓN FALLARÁ
+      junit allowEmptyResults: true, testResults: 'app/build/test-results/testDebugUnitTest/TEST-*.xml' //RUTA DE TUS ARCHIVOS .XML, SI LOS ARCHIVOS NO EXISTEN ESTA INSTRUCCIÓN FALLARÁ
         mail (to: 'steve.campos@ceiba.com.co',subject: "Success Pipeline:${currentBuild.fullDisplayName}",body: "Success pipeline ${env.BUILD_URL}")
     }
     failure {
