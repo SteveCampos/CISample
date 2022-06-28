@@ -9,10 +9,10 @@ class ParkCalculatorImpl : ParkCalculator {
         if (days < 0) {
             throw NegativeDaysException()
         }
-        if (hours >= 24) {
+        if (hours >= 24 || hours <= 0) {
             throw HourLimitExceededException()
         }
 
-        return vehicle.dailyCost() + vehicle.hourCost()
+        return vehicle.dailyCost() * days + vehicle.hourCost() * hours
     }
 }

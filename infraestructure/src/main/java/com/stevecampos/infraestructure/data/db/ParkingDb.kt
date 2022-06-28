@@ -7,20 +7,27 @@ import androidx.room.RoomDatabase
 import com.stevecampos.infraestructure.data.dao.CarEntityDao
 import com.stevecampos.infraestructure.data.dao.MotorcycleEntityDao
 import com.stevecampos.infraestructure.data.dao.ParkingSpaceDao
+import com.stevecampos.infraestructure.data.entity.CarEntity
+import com.stevecampos.infraestructure.data.entity.MotorcycleEntity
+import com.stevecampos.infraestructure.data.entity.ParkingSpaceEntity
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [ParkingSpaceDao::class], version = 1, exportSchema = false)
+@Database(
+    entities = [
+        CarEntity::class, MotorcycleEntity::class, ParkingSpaceEntity::class
+    ], version = 1, exportSchema = false
+)
 abstract class ParkingDb : RoomDatabase() {
-    abstract fun parkingSpaceDao(): ParkingSpaceDao
-    abstract fun motorcycleEntityDao(): MotorcycleEntityDao
-    abstract fun carEntityDao(): CarEntityDao
+    abstract val parkingSpaceDao: ParkingSpaceDao
+    abstract val motorcycleEntityDao: MotorcycleEntityDao
+    abstract val carEntityDao: CarEntityDao
 
     companion object {
 
         @Volatile
         private var INSTANCE: ParkingDb? = null
 
-        fun getDatabase(context: Context, scope: CoroutineScope): ParkingDb {
+        fun getDatabase(context: Context): ParkingDb {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

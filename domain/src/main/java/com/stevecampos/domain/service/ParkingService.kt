@@ -9,8 +9,8 @@ import com.stevecampos.domain.repository.ParkingRepository
 import com.stevecampos.domain.valueobject.ParkCalculator
 
 class ParkingService(
-    private val carsParkingCapacity: Int,
-    private val motorcyclesParkingCapacity: Int,
+    private val carsParkingCapacity: Int = 20,
+    private val motorcyclesParkingCapacity: Int = 10,
     private val parkingCalculator: ParkCalculator,
     private val parkingRepository: ParkingRepository
 ) {

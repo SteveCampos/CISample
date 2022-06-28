@@ -22,8 +22,29 @@ class ParkingSpaceDomainToInfraMapper : Mapper<ParkingSpace, ParkingSpaceEntity>
 
         return ParkingSpaceEntity(
             vehiclePlate = origin.vehicle.plate(),
-            vehicleEntity = vehicleEntity,
+            carEntity = getCar(origin),
+            motorcycleEntity = getMotorcycle(origin),
             startTimeStamp = origin.startTimestamp
         )
+    }
+
+    private fun isCar(origin: ParkingSpace) = origin.vehicle is Car
+    private fun isMotorcycle(origin: ParkingSpace) = origin.vehicle is Motorcycle
+
+    private fun getCar(origin: ParkingSpace): CarEntity? {
+        if (isCar(origin)) {
+            return CarEntity(origin.vehicle.plate())
+        }
+        return null
+    }
+
+    private fun getMotorcycle(origin: ParkingSpace): MotorcycleEntity? {
+        if (isMotorcycle(origin)) {
+            return MotorcycleEntity(
+                origin.vehicle.plate(),
+                (origin.vehicle as Motorcycle).cylinderCapacity
+            )
+        }
+        return null
     }
 }

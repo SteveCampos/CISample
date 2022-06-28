@@ -12,11 +12,11 @@ interface ParkingSpaceDao {
     fun findByPlate(vehiclePlate: String): ParkingSpaceEntity?
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insert(parkingSpace: ParkingSpaceEntity): Boolean
+    suspend fun insert(parkingSpace: ParkingSpaceEntity)
 
     @Query("DELETE FROM ParkingSpaceEntity WHERE vehicle_plate = :vehiclePlate")
-    suspend fun delete(vehiclePlate: String): Boolean
+    suspend fun delete(vehiclePlate: String): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(parkingSpace: List<ParkingSpaceEntity>): Boolean
+    suspend fun insertAll(parkingSpace: List<ParkingSpaceEntity>)
 }

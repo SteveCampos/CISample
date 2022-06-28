@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "ParkingSpaceEntity")
 data class ParkingSpaceEntity(
     @PrimaryKey @ColumnInfo(name = "vehicle_plate") val vehiclePlate: String,
-    @Embedded val vehicleEntity: VehicleEntity,
+    //@Embedded val vehicleEntity: VehicleEntity,
+    @Embedded val carEntity: CarEntity?,
+    @Embedded val motorcycleEntity: MotorcycleEntity?,
     val startTimeStamp: Long
 )

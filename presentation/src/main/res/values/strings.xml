@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">CISample</string>
+    <string name="app_name">ParkingApp</string>
+    <string name="activity_msg_reload">Reintentar</string>
 </resources>

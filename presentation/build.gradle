@@ -121,6 +121,13 @@ task jacocoTestReport(type: JacocoReport,
 
 dependencies {
 
+    implementation project(path: ':domain')
+    implementation project(path: ':infraestructure')
+
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
