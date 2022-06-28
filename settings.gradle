@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CISample"
-include ':app'
+include ':presentation'
 include ':domain'
 include ':infraestructure'
