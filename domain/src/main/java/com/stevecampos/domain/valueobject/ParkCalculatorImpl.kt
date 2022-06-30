@@ -1,7 +1,7 @@
 package com.stevecampos.domain.valueobject
 
 import com.stevecampos.domain.entity.Vehicle
-import com.stevecampos.domain.exception.HourLimitExceededException
+import com.stevecampos.domain.exception.InvalidHoursException
 import com.stevecampos.domain.exception.NegativeDaysException
 
 class ParkCalculatorImpl : ParkCalculator {
@@ -10,7 +10,7 @@ class ParkCalculatorImpl : ParkCalculator {
             throw NegativeDaysException()
         }
         if (hours >= 24 || hours <= 0) {
-            throw HourLimitExceededException()
+            throw InvalidHoursException()
         }
 
         return vehicle.dailyCost() * days + vehicle.hourCost() * hours

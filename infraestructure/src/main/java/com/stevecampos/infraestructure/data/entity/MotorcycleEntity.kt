@@ -6,7 +6,7 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "MotorcycleEntity")
+@Entity
 data class MotorcycleEntity(
     @PrimaryKey @ColumnInfo(name = "motorcycle_plate") val plate: String,
     val cylinderCapacity: Int

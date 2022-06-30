@@ -16,5 +16,4 @@ interface ParkingRepository {
 
     suspend fun getParkingSpaces(): List<ParkingSpace>
 
-
 }
