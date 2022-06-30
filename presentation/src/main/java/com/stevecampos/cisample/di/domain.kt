@@ -1,4 +1,4 @@
-package com.stevecampos.cisample.di
+/*package com.stevecampos.cisample.di
 
 
 import com.stevecampos.domain.service.ParkingService
@@ -18,4 +18,4 @@ val domainModule = module {
             parkingRepository = get()
         )
     }
-}
+}*/

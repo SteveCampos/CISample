@@ -1,4 +1,4 @@
-package com.stevecampos.cisample.di
+/*package com.stevecampos.cisample.di
 
 import com.stevecampos.cisample.features.parking.ParkingViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -8,4 +8,4 @@ val presentationModule = module {
     viewModel {
         ParkingViewModel(get())
     }
-}
+}*/

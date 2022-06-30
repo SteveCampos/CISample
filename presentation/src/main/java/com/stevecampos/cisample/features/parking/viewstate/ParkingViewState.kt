@@ -1,4 +1,4 @@
-package com.stevecampos.cisample.features.parking.viewstate
+/*package com.stevecampos.cisample.features.parking.viewstate
 
 import com.stevecampos.domain.aggregate.ParkingSpace
 import com.stevecampos.domain.entity.Vehicle
@@ -29,4 +29,4 @@ sealed class ParkingViewState {
     data class CalculateParkingCostFailed(val message: String) : ParkingViewState()
     data class CalculateParkingCostSuccess(val cost: Double) : ParkingViewState()
 
-}
+}*/

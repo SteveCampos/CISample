@@ -1,33 +1,15 @@
 package com.stevecampos.cisample
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.stevecampos.cisample.features.parking.ParkingViewModel
-import com.stevecampos.cisample.features.parking.viewstate.ParkingViewState
 import com.stevecampos.cisample.ui.theme.CISampleTheme
-import com.stevecampos.domain.entity.Car
-import com.stevecampos.domain.entity.Motorcycle
-import com.stevecampos.domain.entity.Vehicle
-import org.koin.androidx.compose.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,10 +40,10 @@ fun MyParkingApp() {
             )
         }
     ) {
-        HandlingParkingViewStates()
+        Text("HelloWorld!")
     }
 }
-
+/*
 @Composable
 fun HandlingParkingViewStates(parkingViewModel: ParkingViewModel = get()) {
     val uiState =
@@ -150,32 +132,6 @@ fun VehicleItem(title: String, desc: String, onCalculateClicked: () -> Unit = {}
                     text = "CalculateParkingCost"
                 )
             }
-            /*Row {
-                Icon(
-                    Icons.Outlined.Phone,
-                    tint = MaterialTheme.colors.primary,
-                    contentDescription = stringResource(id = R.string.activity_list_user_cd_phone)
-                )
-                Text(text = user.phone, modifier = Modifier.padding(start = 8.dp))
-            }
-            Row {
-                Icon(
-                    Icons.Outlined.Email,
-                    tint = MaterialTheme.colors.primary,
-                    contentDescription = stringResource(id = R.string.activity_list_user_cd_email)
-                )
-                Text(text = user.email, modifier = Modifier.padding(start = 8.dp))
-            }
-            if (showBttn) TextButton(
-                modifier = Modifier.align(Alignment.End),
-                onClick = onClick
-            ) {
-                Text(
-                    text = stringResource(id = R.string.activity_list_user_msg_show_post).toUpperCase(
-                        Locale.current
-                    )
-                )
-            }*/
         }
     }
 }
@@ -205,6 +161,7 @@ fun FailedToLoadWidget(errorTxt: String, onRefreshBttnClicked: () -> Unit) {
         }
     }
 }
+*/
 
 
 @Preview(showBackground = true)

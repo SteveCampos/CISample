@@ -1,4 +1,4 @@
-package com.stevecampos.cisample.di
+/*package com.stevecampos.cisample.di
 
 import android.app.Application
 import com.stevecampos.domain.repository.ParkingRepository
@@ -36,5 +36,4 @@ fun provideDataBase(application: Application): ParkingDb {
     return ParkingDb.getDatabase(application)
 }
 
-//fun provideDao(parkingDb: ParkingDb): ParkingSpaceDao = parkingDb.parkingSpaceDao
-
+*/

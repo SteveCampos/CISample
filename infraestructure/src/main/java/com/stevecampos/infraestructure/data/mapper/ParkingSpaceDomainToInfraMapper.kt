@@ -1,4 +1,4 @@
-package com.stevecampos.infraestructure.data.mapper
+/*package com.stevecampos.infraestructure.data.mapper
 
 import com.stevecampos.domain.aggregate.ParkingSpace
 import com.stevecampos.domain.entity.Car
@@ -47,4 +47,4 @@ class ParkingSpaceDomainToInfraMapper : Mapper<ParkingSpace, ParkingSpaceEntity>
         }
         return null
     }
-}
+}*/

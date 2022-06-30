@@ -1,7 +1,7 @@
 package com.stevecampos.domain.payment.service
 
-import com.stevecampos.domain.exception.InvalidHoursException
-import com.stevecampos.domain.exception.NegativeDaysException
+import com.stevecampos.domain.payment.exception.InvalidHoursException
+import com.stevecampos.domain.payment.exception.NegativeDaysException
 import com.stevecampos.domain.vehicle.entity.Motorcycle
 import org.junit.Assert
 import org.junit.Test

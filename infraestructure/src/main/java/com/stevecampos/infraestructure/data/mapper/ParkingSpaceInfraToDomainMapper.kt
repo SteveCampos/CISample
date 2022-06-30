@@ -1,4 +1,4 @@
-package com.stevecampos.infraestructure.data.mapper
+/*package com.stevecampos.infraestructure.data.mapper
 
 import com.stevecampos.domain.aggregate.ParkingSpace
 import com.stevecampos.domain.entity.Car
@@ -20,15 +20,6 @@ class ParkingSpaceInfraToDomainMapper : Mapper<ParkingSpaceEntity, ParkingSpace>
             throw VehicleNotSupportedException()
         }
 
-        /*val vehicleEntity = when (val vehicle = origin.vehicleEntity) {
-            is MotorcycleEntity -> Motorcycle(
-                vehicle.plate,
-                vehicle.cylinderCapacity
-            )
-            is CarEntity -> Car(vehicle.plate)
-            else -> throw VehicleNotSupportedException()
-        }*/
-
         return ParkingSpace(
             vehicle = vehicleEntity,
             startTimestamp = origin.startTimeStamp
@@ -36,3 +27,4 @@ class ParkingSpaceInfraToDomainMapper : Mapper<ParkingSpaceEntity, ParkingSpace>
     }
 
 }
+*/

@@ -1,4 +1,4 @@
-package com.stevecampos.infraestructure.data.repository
+/*package com.stevecampos.infraestructure.data.repository
 
 import com.stevecampos.domain.aggregate.ParkingSpace
 import com.stevecampos.domain.entity.Vehicle
@@ -56,4 +56,4 @@ class LocalRepositoryImpl(
         val itemsInfra = parkingDb.parkingSpaceDao.getParkingSpaceItems()
         return parkingSpaceInfraToDomainMapper.map(itemsInfra)
     }
-}
+}*/

@@ -1,10 +1,15 @@
 package com.stevecampos.cisample.features.parking
 
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+/*
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.stevecampos.cisample.features.parking.viewstate.ParkingViewModelActions
 import com.stevecampos.cisample.features.parking.viewstate.ParkingViewState
 import com.stevecampos.domain.aggregate.ParkingSpace
@@ -31,33 +36,6 @@ class ParkingViewModel(private val parkingService: ParkingService) : ViewModel()
         Log.d(TAG, "init")
         getParkingSpaces()
     }
-
-/*
-    private fun fillParkSpaces() {
-
-        val parkSpaces = listOf<ParkingSpace>(
-            ParkingSpace(vehicle = Car("A00-000"), 0),
-            ParkingSpace(vehicle = Car("A00-001"), 0),
-            ParkingSpace(vehicle = Car("A00-002"), 0),
-            ParkingSpace(vehicle = Motorcycle("MOT-001", 200), 0),
-            ParkingSpace(vehicle = Motorcycle("MOT-001", 300), 0),
-            ParkingSpace(vehicle = Motorcycle("MOT-002", 400), 0),
-        )
-        executeTask(
-            ::onFillParkSpacesSuccess,
-            ::onFillParkSpacesFailed,
-        ) {
-            parkingService.saveParkingSpaces(parkSpaces)
-        }
-    }
-
-    private fun onFillParkSpacesFailed(throwable: Throwable) {
-        Log.d(TAG, "onFillParkSpacesFailed: $throwable")
-    }
-
-    private fun onFillParkSpacesSuccess(unit: Unit) {
-        Log.d(TAG, "onFillParkSpacesSuccess")
-    }*/
 
     override fun getParkingSpaces() {
         _viewState.value = ParkingViewState.GetParkingSpacesLoading
@@ -143,7 +121,8 @@ class ParkingViewModel(private val parkingService: ParkingService) : ViewModel()
 
 }
 
-fun <T> ViewModel.executeTask(
+
+*/fun <T> ViewModel.executeTask(
     onSuccess: (T) -> Unit,
     onFailure: (Throwable) -> Unit,
     task: suspend () -> T
