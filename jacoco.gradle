@@ -42,7 +42,7 @@ task jacocoTestReport(type: JacocoReport,
     def kotlinDebugTree = fileTree(
             dir: "app/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
             excludes: excludes)
-    def mainSrc = "app/src/main/java"
+    def mainSrc = "domain/src/main/java"
 /*
     for other modules
     def debugTreeMyLib = fileTree(
