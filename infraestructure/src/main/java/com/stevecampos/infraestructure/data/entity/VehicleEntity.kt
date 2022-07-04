@@ -1,5 +1,3 @@
 package com.stevecampos.infraestructure.data.entity
 
-interface VehicleEntity{
-    fun plate(): String
-}
+abstract class VehicleEntity(private val plate: String)

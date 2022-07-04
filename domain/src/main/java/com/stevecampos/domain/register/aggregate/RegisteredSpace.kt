@@ -13,7 +13,6 @@ data class RegisteredSpace<V : Vehicle>(
     val state: RegisteredState = RegisteredState.Locked
 )
 
-
 sealed class RegisteredState {
     object Locked : RegisteredState()
     object Finished : RegisteredState()

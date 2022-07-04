@@ -1,6 +1,6 @@
-package com.stevecampos.infraestructure.data.mapper
+package com.stevecampos.infraestructure.data.anticorrupt
 
-interface Mapper<in T, out R> {
+interface Translator<in T, out R> {
     fun map(origin: T): R
 
     fun map(origin: List<T>): List<R> =
