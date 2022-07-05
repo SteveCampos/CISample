@@ -27,7 +27,7 @@ fun MotoRegisterSpaceEntity.asDomain(): RegisteredSpace<Motorcycle> {
         vehicle = Motorcycle(this.moto.plate, this.moto.cylinderCapacity),
         parkingSpace = ParkingSpace(this.parkingSpaceEntity.id),
         startDate = this.startDate,
-        finishDate = this.endDate,
+        endDate = this.endDate,
         state = this.state.asDomain()
     )
 }

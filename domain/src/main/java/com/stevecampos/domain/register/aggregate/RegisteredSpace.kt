@@ -9,7 +9,7 @@ data class RegisteredSpace<V : Vehicle>(
     val vehicle: V,
     val parkingSpace: ParkingSpace,
     val startDate: Date,
-    val finishDate: Date?,
+    val endDate: Date?,
     val state: RegisteredState = RegisteredState.Locked
 )
 

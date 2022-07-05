@@ -11,7 +11,7 @@ class CarRegisterSpaceTranslator : Translator<RegisteredSpace<Car>, CarRegisterS
             car = CarEntity(origin.vehicle.plate),
             parkingSpaceEntity = ParkingSpaceEntity(origin.parkingSpace.id),
             startDate = origin.startDate,
-            endDate = origin.finishDate,
+            endDate = origin.endDate,
             state = origin.state.toExternal()
         )
     }

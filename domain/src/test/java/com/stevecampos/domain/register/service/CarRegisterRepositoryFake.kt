@@ -8,7 +8,7 @@ import com.stevecampos.domain.vehicle.entity.Car
 import java.time.Instant
 import java.util.*
 
-class CarRegisterRepositoryFakeImpl(initSize: Int) : CarRegisterRepository {
+class CarRegisterRepositoryFake(private val initSize: Int) : CarRegisterRepository {
     private val registeredSpaces = mutableListOf<RegisteredSpace<Car>>()
 
     init {
@@ -18,7 +18,7 @@ class CarRegisterRepositoryFakeImpl(initSize: Int) : CarRegisterRepository {
                     vehicle = Car("AAA$i".padEnd(6, '0')),
                     parkingSpace = ParkingSpace(i),
                     startDate = Date.from(Instant.now()),
-                    finishDate = null
+                    endDate = null
                 )
             )
         }
@@ -30,5 +30,20 @@ class CarRegisterRepositoryFakeImpl(initSize: Int) : CarRegisterRepository {
 
     override suspend fun getRegisteredSpaces(state: RegisteredState): List<RegisteredSpace<Car>> {
         return registeredSpaces.toList()
+    }
+
+    override suspend fun getActiveRegisterSpaceForSpace(parkingSpace: ParkingSpace): RegisteredSpace<Car>? {
+        return registeredSpaces.firstOrNull { it.parkingSpace.id == parkingSpace.id }
+    }
+
+    override suspend fun getActiveRegisterSpaceForVehicle(vehicle: Car): RegisteredSpace<Car>? {
+        return registeredSpaces.firstOrNull { it.vehicle.plate == vehicle.plate }
+    }
+
+    override suspend fun finishRegisterSpaced(
+        registeredSpace: RegisteredSpace<Car>
+    ) {
+        val registeredSpaceIndex = registeredSpaces.indexOf(registeredSpace)
+        registeredSpaces[registeredSpaceIndex] = registeredSpace.copy(state = RegisteredState.Finished)
     }
 }

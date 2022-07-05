@@ -1,6 +1,5 @@
 package com.stevecampos.domain.vehicle
 
-import com.stevecampos.domain.register.service.RegisterService
 import com.stevecampos.domain.vehicle.entity.Car
 import com.stevecampos.domain.vehicle.exception.InvalidPlateException
 import org.junit.Assert

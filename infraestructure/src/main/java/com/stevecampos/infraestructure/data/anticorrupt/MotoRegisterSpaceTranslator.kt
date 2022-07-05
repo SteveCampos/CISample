@@ -12,7 +12,7 @@ class MotoRegisterSpaceTranslator :
             moto = MotorcycleEntity(origin.vehicle.plate, origin.vehicle.cylinderCapacity),
             parkingSpaceEntity = ParkingSpaceEntity(origin.parkingSpace.id),
             startDate = origin.startDate,
-            endDate = origin.finishDate,
+            endDate = origin.endDate,
             state = origin.state.toExternal()
         )
     }
