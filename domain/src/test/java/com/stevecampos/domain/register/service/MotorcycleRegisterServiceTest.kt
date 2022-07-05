@@ -37,7 +37,7 @@ class MotorcycleRegisterServiceTest {
         val parkingSpace = ParkingSpace(0)
         val sunday = getNextDayOfWeek(DayOfWeek.SUNDAY)
 
-        val motorcycleRegisterService = MotorcycleRegisterService(MotorcycleRegisterRepositoryFake(8))
+        val motorcycleRegisterService = MotorcycleRegisterService(MotorcycleRegisterRepositoryFake(0))
 
         //Assert
         Assert.assertThrows(UnAuthorizedException::class.java) {
@@ -56,7 +56,7 @@ class MotorcycleRegisterServiceTest {
         val parkingSpace = ParkingSpace(0)
         val sunday = getNextDayOfWeek(DayOfWeek.SATURDAY)
 
-        val motorcycleRegisterService = MotorcycleRegisterService(MotorcycleRegisterRepositoryFake(8))
+        val motorcycleRegisterService = MotorcycleRegisterService(MotorcycleRegisterRepositoryFake(0))
 
         //Act
         runBlocking {
@@ -72,7 +72,7 @@ class MotorcycleRegisterServiceTest {
         val parkingSpace = ParkingSpace(0)
         val sunday = getNextDayOfWeek(DayOfWeek.SUNDAY)
 
-        val motorcycleRegisterService = MotorcycleRegisterService(MotorcycleRegisterRepositoryFake(8))
+        val motorcycleRegisterService = MotorcycleRegisterService(MotorcycleRegisterRepositoryFake(0))
 
         //Act
         runBlocking {

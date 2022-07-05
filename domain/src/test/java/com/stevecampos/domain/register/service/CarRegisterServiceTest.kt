@@ -1,5 +1,6 @@
 package com.stevecampos.domain.register.service
 
+import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.exception.NotParkingSpacesAvailableException
 import com.stevecampos.domain.register.exception.UnAuthorizedException
@@ -9,6 +10,8 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
 import java.time.DayOfWeek
+import java.time.Instant
+import java.util.*
 
 class CarRegisterServiceTest {
 
@@ -20,7 +23,7 @@ class CarRegisterServiceTest {
         val parkingSpace = ParkingSpace(0)
         val sunday = getNextDayOfWeek(DayOfWeek.SUNDAY)
 
-        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(8))
+        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(0))
 
         //Assert
         Assert.assertThrows(UnAuthorizedException::class.java) {
@@ -39,7 +42,7 @@ class CarRegisterServiceTest {
         val parkingSpace = ParkingSpace(0)
         val sunday = getNextDayOfWeek(DayOfWeek.SUNDAY)
 
-        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(8))
+        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(0))
 
         //Assert
         Assert.assertThrows(UnAuthorizedException::class.java) {
@@ -54,11 +57,11 @@ class CarRegisterServiceTest {
     fun register_whenPlateCarBeginsWithAAndStartDateIsSaturday_shouldNotThrowUnauthorizedException() {
 
         //Arrange
-        val car = Car("AAA000")
+        val car = Car("XAA000")
         val parkingSpace = ParkingSpace(0)
         val sunday = getNextDayOfWeek(DayOfWeek.SATURDAY)
 
-        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(8))
+        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(0))
 
         //Act
         runBlocking {
@@ -74,7 +77,7 @@ class CarRegisterServiceTest {
         val parkingSpace = ParkingSpace(0)
         val sunday = getNextDayOfWeek(DayOfWeek.SUNDAY)
 
-        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(8))
+        val carRegisterService = CarRegisterService(CarRegisterRepositoryFake(0))
 
         //Act
         runBlocking {

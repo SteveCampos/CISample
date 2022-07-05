@@ -12,7 +12,7 @@ class CarRegisterRepositoryFake(private val initSize: Int) : CarRegisterReposito
     private val registeredSpaces = mutableListOf<RegisteredSpace<Car>>()
 
     init {
-        for (i in 0..initSize) {
+        for (i in 1..initSize) {
             registeredSpaces.add(
                 RegisteredSpace(
                     vehicle = Car("AAA$i".padEnd(6, '0')),
@@ -44,6 +44,7 @@ class CarRegisterRepositoryFake(private val initSize: Int) : CarRegisterReposito
         registeredSpace: RegisteredSpace<Car>
     ) {
         val registeredSpaceIndex = registeredSpaces.indexOf(registeredSpace)
-        registeredSpaces[registeredSpaceIndex] = registeredSpace.copy(state = RegisteredState.Finished)
+        registeredSpaces[registeredSpaceIndex] =
+            registeredSpace.copy(state = RegisteredState.Finished)
     }
 }

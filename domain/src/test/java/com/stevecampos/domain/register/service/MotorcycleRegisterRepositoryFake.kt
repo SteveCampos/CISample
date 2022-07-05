@@ -12,7 +12,7 @@ class MotorcycleRegisterRepositoryFake(initSize: Int) : MotorcycleRegisterReposi
     private val registeredSpaces = mutableListOf<RegisteredSpace<Motorcycle>>()
 
     init {
-        for (i in 0..initSize) {
+        for (i in 1..initSize) {
             registeredSpaces.add(
                 RegisteredSpace(
                     vehicle = Motorcycle("AAA$i".padEnd(6, '0'), 400),
