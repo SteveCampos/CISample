@@ -14,13 +14,6 @@ pipeline {
 
 
   stages{
-
-    stage('Checkout') {
-      steps{
-        echo "------------>Checkout<------------"
-        checkout scm
-      }
-    }
   
   stage('Compile') {
     steps {
