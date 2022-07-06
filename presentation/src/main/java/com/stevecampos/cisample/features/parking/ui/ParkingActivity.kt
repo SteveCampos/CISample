@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.stevecampos.cisample.R
-import com.stevecampos.cisample.features.parking.ParkingViewModel
+import com.stevecampos.cisample.features.parking.vm.ParkingViewModel
 import com.stevecampos.cisample.ui.theme.CISampleTheme
 import org.koin.androidx.compose.get
 

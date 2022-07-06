@@ -4,7 +4,6 @@ import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.aggregate.RegisteredState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.repository.MotorcycleRegisterRepository
-import com.stevecampos.domain.vehicle.entity.Car
 import com.stevecampos.domain.vehicle.entity.Motorcycle
 import com.stevecampos.infraestructure.data.anticorrupt.MotoRegisterSpaceTranslator
 import com.stevecampos.infraestructure.data.dao.MotoRegisterSpaceDao

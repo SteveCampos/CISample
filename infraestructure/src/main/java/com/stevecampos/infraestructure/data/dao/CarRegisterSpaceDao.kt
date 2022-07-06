@@ -4,9 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.infraestructure.data.entity.CarRegisterSpaceEntity
-import com.stevecampos.infraestructure.data.entity.ParkingSpaceEntity
 import com.stevecampos.infraestructure.data.entity.RegisterStateEntity
 
 @Dao

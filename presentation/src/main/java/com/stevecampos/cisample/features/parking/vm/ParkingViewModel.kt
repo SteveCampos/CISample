@@ -1,4 +1,4 @@
-package com.stevecampos.cisample.features.parking
+package com.stevecampos.cisample.features.parking.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,8 +10,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.service.*
-import com.stevecampos.domain.vehicle.entity.Car
-import com.stevecampos.domain.vehicle.entity.Motorcycle
 
 class ParkingViewModel(
     private val carParkingService: CarParkingSpaceService,

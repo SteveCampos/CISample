@@ -1,6 +1,6 @@
 package com.stevecampos.cisample.di
 
-import com.stevecampos.cisample.features.parking.ParkingViewModel
+import com.stevecampos.cisample.features.parking.vm.ParkingViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
