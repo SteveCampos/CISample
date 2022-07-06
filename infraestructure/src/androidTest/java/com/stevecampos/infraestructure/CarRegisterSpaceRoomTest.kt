@@ -5,11 +5,10 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stevecampos.domain.register.aggregate.RegisteredState
-import com.stevecampos.infraestructure.data.dao.CarRegisterSpaceDao
 import com.stevecampos.infraestructure.data.db.ParkingDatabase
 import com.stevecampos.infraestructure.data.entity.*
 import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotSavedException
-import com.stevecampos.infraestructure.data.repository.CarRegisterSpaceRoom
+import com.stevecampos.infraestructure.data.repository.CarRegisterRoom
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -24,7 +23,7 @@ import java.util.*
 class CarRegisterSpaceRoomTest {
 
     private lateinit var db: ParkingDatabase
-    private lateinit var carRegisterSpaceRoom: CarRegisterSpaceRoom
+    private lateinit var carRegisterRoom: CarRegisterRoom
 
     @Before
     fun createDb() {
@@ -34,7 +33,7 @@ class CarRegisterSpaceRoomTest {
             ParkingDatabase::class.java
         ).build()
         val carRegisterSpaceDao = db.carRegisterSpaceDao
-        carRegisterSpaceRoom = CarRegisterSpaceRoom(carRegisterSpaceDao)
+        carRegisterRoom = CarRegisterRoom(carRegisterSpaceDao)
     }
 
     @After
@@ -56,9 +55,9 @@ class CarRegisterSpaceRoomTest {
             state = RegisterStateEntity.LOCKED
         ).asDomain()
         //Act
-        carRegisterSpaceRoom.register(carRegisterSpace)
+        carRegisterRoom.register(carRegisterSpace)
         //Assert
-        val items = carRegisterSpaceRoom.getRegisteredSpaces(state = RegisteredState.Locked)
+        val items = carRegisterRoom.getRegisteredSpaces(state = RegisteredState.Locked)
         Assert.assertEquals(items.size, 1)
     }
 
@@ -90,8 +89,8 @@ class CarRegisterSpaceRoomTest {
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
             runBlocking {
                 //Act
-                carRegisterSpaceRoom.register(carRegisterSpace1)
-                carRegisterSpaceRoom.register(carRegisterSpace2)
+                carRegisterRoom.register(carRegisterSpace1)
+                carRegisterRoom.register(carRegisterSpace2)
             }
         }
     }
@@ -124,8 +123,8 @@ class CarRegisterSpaceRoomTest {
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
             runBlocking {
                 //Act
-                carRegisterSpaceRoom.register(carRegisterSpace1)
-                carRegisterSpaceRoom.register(carRegisterSpace2)
+                carRegisterRoom.register(carRegisterSpace1)
+                carRegisterRoom.register(carRegisterSpace2)
             }
         }
     }
@@ -135,7 +134,7 @@ class CarRegisterSpaceRoomTest {
         //Arrange
 
         //Act
-        val items = carRegisterSpaceRoom.getRegisteredSpaces(RegisteredState.Locked)
+        val items = carRegisterRoom.getRegisteredSpaces(RegisteredState.Locked)
         //Assert
 
         Assert.assertEquals(items.size, 0)
@@ -156,14 +155,14 @@ class CarRegisterSpaceRoomTest {
                 null,
                 state = RegisterStateEntity.LOCKED
             ).asDomain()
-            carRegisterSpaceRoom.register(carRegisterSpace1)
+            carRegisterRoom.register(carRegisterSpace1)
 
             //Act
 
-            carRegisterSpaceRoom.finishRegisterSpaced(carRegisterSpace1)
+            carRegisterRoom.finishRegisterSpaced(carRegisterSpace1)
             //Assert
 
-            val items = carRegisterSpaceRoom.getRegisteredSpaces(state = RegisteredState.Locked)
+            val items = carRegisterRoom.getRegisteredSpaces(state = RegisteredState.Locked)
             Assert.assertEquals(0, items.size)
         }
 }

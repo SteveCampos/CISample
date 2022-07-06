@@ -13,7 +13,7 @@ import com.stevecampos.infraestructure.data.entity.asDomain
 import com.stevecampos.infraestructure.data.entity.toExternal
 import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotSavedException
 
-class MotoRegisterSpaceRoom(private val motoRegisterSpaceDao: MotoRegisterSpaceDao) :
+class MotorcycleRegisterRoom(private val motoRegisterSpaceDao: MotoRegisterSpaceDao) :
     MotorcycleRegisterRepository {
     override suspend fun register(registeredSpace: RegisteredSpace<Motorcycle>) {
         val motoRegisterSpaceTranslator = MotoRegisterSpaceTranslator()

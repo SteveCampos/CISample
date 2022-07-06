@@ -1,21 +1,16 @@
-/*package com.stevecampos.cisample.di
+package com.stevecampos.cisample.di
 
 
-import com.stevecampos.domain.service.ParkingService
-import com.stevecampos.domain.valueobject.ParkCalculator
-import com.stevecampos.domain.valueobject.ParkCalculatorImpl
+import com.stevecampos.domain.register.service.CarParkingSpaceService
+import com.stevecampos.domain.register.service.MotorcycleParkingSpaceService
 import org.koin.dsl.module
 
 val domainModule = module {
 
-    single<ParkCalculator> {
-        ParkCalculatorImpl()
+    single<CarParkingSpaceService> {
+        CarParkingSpaceService()
     }
-
-    single {
-        ParkingService(
-            parkingCalculator = get(),
-            parkingRepository = get()
-        )
+    single<MotorcycleParkingSpaceService> {
+        MotorcycleParkingSpaceService()
     }
-}*/
+}

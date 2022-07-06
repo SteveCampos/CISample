@@ -13,7 +13,7 @@ import com.stevecampos.infraestructure.data.entity.toExternal
 import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotFinishedException
 import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotSavedException
 
-class CarRegisterSpaceRoom(private val carRegisterSpaceDao: CarRegisterSpaceDao) :
+class CarRegisterRoom(private val carRegisterSpaceDao: CarRegisterSpaceDao) :
     CarRegisterRepository {
     override suspend fun register(registeredSpace: RegisteredSpace<Car>) {
         val carRegisterSpaceTranslator = CarRegisterSpaceTranslator()

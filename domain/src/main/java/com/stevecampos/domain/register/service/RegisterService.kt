@@ -8,7 +8,6 @@ import com.stevecampos.domain.register.exception.SpaceLockedException
 import com.stevecampos.domain.register.exception.UnAuthorizedException
 import com.stevecampos.domain.register.exception.VehicleAlreadyOnParkingSpaceException
 import com.stevecampos.domain.register.repository.RegisterRepository
-import com.stevecampos.domain.register.valueobject.ParkingSpaceSize
 import com.stevecampos.domain.register.valueobject.isMonday
 import com.stevecampos.domain.register.valueobject.isSunday
 import com.stevecampos.domain.vehicle.entity.Vehicle
@@ -16,7 +15,7 @@ import java.util.*
 
 abstract class RegisterService<V : Vehicle>(
     private val registerRepository: RegisterRepository<V>,
-    private val parkingSpaceSize: ParkingSpaceSize<V>
+    private val parkingSpaceService: ParkingSpaceService<V>
 ) {
     suspend fun register(vehicle: V, parkingSpace: ParkingSpace, startDate: Date) {
         if (vehicle.plateBeginsWithA() && (startDate.isSunday() || startDate.isMonday()))
@@ -26,7 +25,7 @@ abstract class RegisterService<V : Vehicle>(
             registerRepository.getRegisteredSpaces(state = RegisteredState.Locked)
 
 
-        if (spacesLockedForVehicleType.size >= parkingSpaceSize.size)
+        if (spacesLockedForVehicleType.size >= parkingSpaceService.size)
             throw NotParkingSpacesAvailableException()
 
         if (registerRepository.getActiveRegisterSpaceForSpace(parkingSpace) != null) {

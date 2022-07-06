@@ -6,27 +6,26 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/*
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.stevecampos.cisample.features.parking.viewstate.ParkingViewModelActions
-import com.stevecampos.cisample.features.parking.viewstate.ParkingViewState
-import com.stevecampos.domain.aggregate.ParkingSpace
-import com.stevecampos.domain.entity.Motorcycle
-import com.stevecampos.domain.entity.Vehicle
-import com.stevecampos.domain.service.ParkingService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.stevecampos.domain.register.entity.ParkingSpace
+import com.stevecampos.domain.register.service.*
+import com.stevecampos.domain.vehicle.entity.Car
+import com.stevecampos.domain.vehicle.entity.Motorcycle
 
-class ParkingViewModel(private val parkingService: ParkingService) : ViewModel(),
-    ParkingViewModelActions {
+class ParkingViewModel(
+    private val carParkingService: CarParkingSpaceService,
+    private val motorcycleParkingSpaceService: MotorcycleParkingSpaceService,
+    private val carRegisterService: CarRegisterService,
+    private val motorcycleRegisterService: MotorcycleRegisterService
+) : ViewModel(), ParkingActions {
 
 
-    private val _viewState =
-        MutableLiveData<ParkingViewState>(ParkingViewState.GetParkingSpacesLoading)
-    val viewState: LiveData<ParkingViewState> = _viewState
+    //private val _viewState =
+    //    MutableLiveData<ParkingViewState>(ParkingViewState.GetParkingSpacesLoading)
+    //val viewState: LiveData<ParkingViewState> = _viewState
+
+    val carParkingSpaces = MutableLiveData<List<ParkingSpace>>(listOf())
 
     companion object {
         const val TAG = "ParkingViewModel"
@@ -34,95 +33,33 @@ class ParkingViewModel(private val parkingService: ParkingService) : ViewModel()
 
     init {
         Log.d(TAG, "init")
-        getParkingSpaces()
+        getCarParkingSpaces()
     }
 
-    override fun getParkingSpaces() {
-        _viewState.value = ParkingViewState.GetParkingSpacesLoading
+    private fun getCarParkingSpaces() {
         executeTask(
-            ::onGetParkingSpaceSuccess,
-            ::onGetParkingSpaceFailed
+            ::onGetCarParkingSpacesSuccess,
+            ::onGetCarParkingSpacesFailed
         ) {
-            parkingService.getParkingSpaces()
+            carParkingService.getParkingSpaces()
         }
     }
 
-    private fun onGetParkingSpaceFailed(throwable: Throwable) {
-        Log.d(TAG, "onGetParkingSpaceFailed: $throwable")
-        _viewState.value = ParkingViewState.GetParkingSpacesFailed(throwable.message ?: "error")
+    private fun onGetCarParkingSpacesFailed(throwable: Throwable) {
+        Log.d(TAG, "onGetCarParkingSpacesFailed: $throwable")
     }
 
-    private fun onGetParkingSpaceSuccess(list: List<ParkingSpace>) {
-        Log.d(TAG, "onGetParkingSpaceSuccess: $list")
-        _viewState.value = ParkingViewState.GetParkingSpacesSuccess(list)
+    private fun onGetCarParkingSpacesSuccess(spaces: List<ParkingSpace>) {
+        Log.d(TAG, "onGetCarParkingSpacesSuccess: $spaces")
+        carParkingSpaces.value = spaces
     }
+}
 
-    override fun addVehicleToParking(vehicle: Vehicle) {
-        _viewState.value = ParkingViewState.AddVehicleToParkingLoading
-        executeTask(
-            ::onAddVehicleToParkingSuccess,
-            ::onAddVehicleToParkingFailed
-        ) {
-            parkingService.addVehicleToParking(vehicle)
-        }
-    }
-
-    private fun onAddVehicleToParkingFailed(throwable: Throwable) {
-        Log.d(TAG, "onAddVehicleToParkingFailed: $throwable")
-        _viewState.value = ParkingViewState.AddVehicleToParkingFailed(throwable.message ?: "error")
-    }
-
-    private fun onAddVehicleToParkingSuccess(unit: Unit) {
-        Log.d(TAG, "onAddVehicleToParkingSuccess")
-        _viewState.value = ParkingViewState.AddVehicleToParkingSuccess
-    }
-
-    override fun resetParkingSpaceFor(vehicle: Vehicle) {
-        _viewState.value = ParkingViewState.DeleteVehicleFromParkingSpaceLoading
-        executeTask(
-            ::onResetParkingSpaceSuccess,
-            ::onResetParkingSpaceFailed
-        ) {
-            parkingService.resetParkingSpace(vehicle)
-        }
-    }
-
-    private fun onResetParkingSpaceFailed(throwable: Throwable) {
-        Log.d(TAG, "onResetParkingSpaceFailed: $throwable")
-        _viewState.value =
-            ParkingViewState.DeleteVehicleFromParkingSpaceFailed(throwable.message ?: "error")
-    }
-
-    private fun onResetParkingSpaceSuccess(unit: Unit) {
-        Log.d(TAG, "onResetParkingSpaceSuccess")
-        _viewState.value = ParkingViewState.DeleteVehicleFromParkingSpaceSuccess
-
-    }
-
-    override fun calculateParkingCost(vehicle: Vehicle, days: Int, hours: Int) {
-        _viewState.value = ParkingViewState.CalculateParkingCostLoading
-        executeTask(
-            ::onCalculateParkingCostSuccess,
-            ::onCalculateParkingCostFailed,
-        ) {
-            parkingService.getParkingCostForVehicle(vehicle, days, hours)
-        }
-    }
-
-    private fun onCalculateParkingCostFailed(throwable: Throwable) {
-        Log.d(TAG, "onCalculateParkingCostFailed: $throwable")
-        _viewState.value = ParkingViewState.CalculateParkingCostFailed(throwable.message ?: "error")
-    }
-
-    private fun onCalculateParkingCostSuccess(parkingCost: Double) {
-        Log.d(TAG, "onCalculateParkingCostSuccess: $parkingCost")
-        _viewState.value = ParkingViewState.CalculateParkingCostSuccess(parkingCost)
-    }
+interface ParkingActions {
 
 }
 
-
-*/fun <T> ViewModel.executeTask(
+fun <T> ViewModel.executeTask(
     onSuccess: (T) -> Unit,
     onFailure: (Throwable) -> Unit,
     task: suspend () -> T

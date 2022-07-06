@@ -5,12 +5,10 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stevecampos.domain.register.aggregate.RegisteredState
-import com.stevecampos.infraestructure.data.dao.MotoRegisterSpaceDao
 import com.stevecampos.infraestructure.data.db.ParkingDatabase
 import com.stevecampos.infraestructure.data.entity.*
 import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotSavedException
-import com.stevecampos.infraestructure.data.repository.CarRegisterSpaceRoom
-import com.stevecampos.infraestructure.data.repository.MotoRegisterSpaceRoom
+import com.stevecampos.infraestructure.data.repository.MotorcycleRegisterRoom
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -24,7 +22,7 @@ import java.util.*
 @RunWith(AndroidJUnit4::class)
 class MotorcycleRegisterSpaceRoomTest {
     private lateinit var db: ParkingDatabase
-    private lateinit var motoRegisterSpaceRoom: MotoRegisterSpaceRoom
+    private lateinit var motorcycleRegisterRoom: MotorcycleRegisterRoom
 
     @Before
     fun createDb() {
@@ -34,7 +32,7 @@ class MotorcycleRegisterSpaceRoomTest {
             ParkingDatabase::class.java
         ).build()
         val motoRegisterSpaceDao = db.motoRegisterSpaceDao
-        motoRegisterSpaceRoom = MotoRegisterSpaceRoom(motoRegisterSpaceDao)
+        motorcycleRegisterRoom = MotorcycleRegisterRoom(motoRegisterSpaceDao)
     }
 
     @After
@@ -56,9 +54,9 @@ class MotorcycleRegisterSpaceRoomTest {
             state = RegisterStateEntity.LOCKED
         ).asDomain()
         //Act
-        motoRegisterSpaceRoom.register(motoRegisterSpace)
+        motorcycleRegisterRoom.register(motoRegisterSpace)
         //Assert
-        val items = motoRegisterSpaceRoom.getRegisteredSpaces(state = RegisteredState.Locked)
+        val items = motorcycleRegisterRoom.getRegisteredSpaces(state = RegisteredState.Locked)
         Assert.assertEquals(items.size, 1)
     }
 
@@ -85,16 +83,13 @@ class MotorcycleRegisterSpaceRoomTest {
             null,
             state = RegisterStateEntity.LOCKED
         ).asDomain()
-        //Act
-        motoRegisterSpaceRoom.register(motoRegisterSpace1)
-        motoRegisterSpaceRoom.register(motoRegisterSpace2)
 
         //Assert
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
             runBlocking {
                 //Act
-                motoRegisterSpaceRoom.register(motoRegisterSpace1)
-                motoRegisterSpaceRoom.register(motoRegisterSpace2)
+                motorcycleRegisterRoom.register(motoRegisterSpace1)
+                motorcycleRegisterRoom.register(motoRegisterSpace2)
             }
         }
     }
@@ -127,8 +122,8 @@ class MotorcycleRegisterSpaceRoomTest {
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
             runBlocking {
                 //Act
-                motoRegisterSpaceRoom.register(motoRegisterSpace1)
-                motoRegisterSpaceRoom.register(motoRegisterSpace2)
+                motorcycleRegisterRoom.register(motoRegisterSpace1)
+                motorcycleRegisterRoom.register(motoRegisterSpace2)
             }
         }
     }
@@ -138,7 +133,7 @@ class MotorcycleRegisterSpaceRoomTest {
         //Arrange
 
         //Act
-        val items = motoRegisterSpaceRoom.getRegisteredSpaces(RegisteredState.Locked)
+        val items = motorcycleRegisterRoom.getRegisteredSpaces(RegisteredState.Locked)
         //Assert
 
         Assert.assertEquals(items.size, 0)
@@ -159,14 +154,14 @@ class MotorcycleRegisterSpaceRoomTest {
                 null,
                 state = RegisterStateEntity.LOCKED
             ).asDomain()
-            motoRegisterSpaceRoom.register(motoRegisterSpace1)
+            motorcycleRegisterRoom.register(motoRegisterSpace1)
 
             //Act
 
-            motoRegisterSpaceRoom.finishRegisterSpaced(motoRegisterSpace1)
+            motorcycleRegisterRoom.finishRegisterSpaced(motoRegisterSpace1)
             //Assert
 
-            val items = motoRegisterSpaceRoom.getRegisteredSpaces(state = RegisteredState.Locked)
+            val items = motorcycleRegisterRoom.getRegisteredSpaces(state = RegisteredState.Locked)
             Assert.assertEquals(0, items.size)
         }
 }

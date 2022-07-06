@@ -1,39 +1,42 @@
-/*package com.stevecampos.cisample.di
+package com.stevecampos.cisample.di
 
-import android.app.Application
-import com.stevecampos.domain.repository.ParkingRepository
-import com.stevecampos.infraestructure.data.dao.ParkingSpaceDao
-import com.stevecampos.infraestructure.data.db.ParkingDb
-import com.stevecampos.infraestructure.data.mapper.ParkingSpaceDomainToInfraMapper
-import com.stevecampos.infraestructure.data.mapper.ParkingSpaceInfraToDomainMapper
-import com.stevecampos.infraestructure.data.repository.LocalRepositoryImpl
+import com.stevecampos.domain.register.repository.CarRegisterRepository
+import com.stevecampos.domain.register.repository.MotorcycleRegisterRepository
+import com.stevecampos.domain.register.service.CarRegisterService
+import com.stevecampos.domain.register.service.MotorcycleRegisterService
+import com.stevecampos.infraestructure.data.dao.CarRegisterSpaceDao
+import com.stevecampos.infraestructure.data.dao.MotoRegisterSpaceDao
+import com.stevecampos.infraestructure.data.db.ParkingDatabase
+import com.stevecampos.infraestructure.data.repository.CarRegisterRoom
+import com.stevecampos.infraestructure.data.repository.MotorcycleRegisterRoom
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
-val infraestructureModule = module {
+val infrastructureModule = module {
 
-    single {
-        provideDataBase(androidApplication())
+    single<ParkingDatabase> {
+        ParkingDatabase.provideDatabase(androidApplication())
     }
-
-    single {
-        ParkingSpaceDomainToInfraMapper()
+    single<CarRegisterSpaceDao> {
+        get<ParkingDatabase>().carRegisterSpaceDao
+    }
+    single<CarRegisterRepository> {
+        CarRegisterRoom(get())
     }
     single {
-        ParkingSpaceInfraToDomainMapper()
+        CarRegisterService(get<CarRegisterRepository>())
     }
-    single<ParkingRepository> {
-        LocalRepositoryImpl(
-            get(),
-            get(),
-            get()
-        )
+    single<MotoRegisterSpaceDao> {
+        get<ParkingDatabase>().motoRegisterSpaceDao
+    }
+    single<MotorcycleRegisterRepository> {
+        MotorcycleRegisterRoom(get())
+    }
+    single {
+        MotorcycleRegisterService(get<MotorcycleRegisterRepository>())
     }
 
 }
 
-fun provideDataBase(application: Application): ParkingDb {
-    return ParkingDb.getDatabase(application)
-}
 
-*/
+

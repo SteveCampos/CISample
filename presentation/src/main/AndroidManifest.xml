@@ -13,6 +13,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:theme="@style/Theme.CISample" />
+        <activity
+            android:name=".features.parking.ui.ParkingActivity"
+            android:exported="true"
             android:theme="@style/Theme.CISample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
