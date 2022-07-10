@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ParkingApp</string>
     <string name="activity_msg_reload">Reintentar</string>
+    <string name="activity_parking_msg_error">Error loading parking</string>
 </resources>

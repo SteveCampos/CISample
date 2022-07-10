@@ -24,7 +24,7 @@ class MotorcycleRegisterSpaceTranslatorTest {
         )
         val translator = MotoRegisterSpaceTranslator()
         //Act
-        val infrastructureEntity = translator.map(domainEntity)
+        val infrastructureEntity = translator.translateToInfrastructure(domainEntity)
         //Assert
         Assert.assertEquals(id, infrastructureEntity.id)
     }

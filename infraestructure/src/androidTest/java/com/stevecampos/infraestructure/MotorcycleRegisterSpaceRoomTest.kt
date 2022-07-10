@@ -5,11 +5,12 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stevecampos.domain.register.aggregate.RegisteredState
+import com.stevecampos.infraestructure.register.anticorrupt.CarRegisterSpaceTranslator
+import com.stevecampos.infraestructure.register.anticorrupt.MotoRegisterSpaceTranslator
 import com.stevecampos.infraestructure.share.ParkingDatabase
 import com.stevecampos.infraestructure.register.entity.MotoRegisterSpaceEntity
 import com.stevecampos.infraestructure.register.entity.ParkingSpaceEntity
 import com.stevecampos.infraestructure.register.entity.RegisterStateEntity
-import com.stevecampos.infraestructure.register.entity.asDomain
 import com.stevecampos.infraestructure.register.exception.RegisterSpaceNotSavedException
 import com.stevecampos.infraestructure.register.repository.MotorcycleRegisterRoom
 import com.stevecampos.infraestructure.vehicle.entity.MotorcycleEntity
@@ -27,6 +28,8 @@ import java.util.*
 class MotorcycleRegisterSpaceRoomTest {
     private lateinit var db: ParkingDatabase
     private lateinit var motorcycleRegisterRoom: MotorcycleRegisterRoom
+
+    private val motoRegisterSpaceTranslator = MotoRegisterSpaceTranslator()
 
     @Before
     fun createDb() {
@@ -49,14 +52,16 @@ class MotorcycleRegisterSpaceRoomTest {
 
         //Arrange
 
-        val motoRegisterSpace = MotoRegisterSpaceEntity(
-            id = UUID.randomUUID().toString(),
-            moto = MotorcycleEntity("AAA000", 400),
-            parkingSpaceEntity = ParkingSpaceEntity(1),
-            startDate = Date(1656945638133),
-            endDate = null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
+        val motoRegisterSpace = motoRegisterSpaceTranslator.translateToDomain(
+            MotoRegisterSpaceEntity(
+                id = UUID.randomUUID().toString(),
+                moto = MotorcycleEntity("AAA000", 400),
+                parkingSpaceEntity = ParkingSpaceEntity(1),
+                startDate = Date(1656945638133),
+                endDate = null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
         //Act
         motorcycleRegisterRoom.register(motoRegisterSpace)
         //Assert
@@ -71,22 +76,26 @@ class MotorcycleRegisterSpaceRoomTest {
         val moto1 = MotorcycleEntity("AAA000", 400)
         val moto2 = MotorcycleEntity("AAA000", 400)
 
-        val motoRegisterSpace1 = MotoRegisterSpaceEntity(
-            "moto1",
-            moto1,
-            ParkingSpaceEntity(1),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
-        val motoRegisterSpace2 = MotoRegisterSpaceEntity(
-            "moto2",
-            moto2,
-            ParkingSpaceEntity(2),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
+        val motoRegisterSpace1 = motoRegisterSpaceTranslator.translateToDomain(
+            MotoRegisterSpaceEntity(
+                "moto1",
+                moto1,
+                ParkingSpaceEntity(1),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
+        val motoRegisterSpace2 = motoRegisterSpaceTranslator.translateToDomain(
+            MotoRegisterSpaceEntity(
+                "moto2",
+                moto2,
+                ParkingSpaceEntity(2),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
 
         //Assert
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
@@ -105,22 +114,26 @@ class MotorcycleRegisterSpaceRoomTest {
         val moto1 = MotorcycleEntity("AAA000", 400)
         val moto2 = MotorcycleEntity("AAA001", 400)
 
-        val motoRegisterSpace1 = MotoRegisterSpaceEntity(
-            "moto1",
-            moto1,
-            ParkingSpaceEntity(1),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
-        val motoRegisterSpace2 = MotoRegisterSpaceEntity(
-            "moto2",
-            moto2,
-            ParkingSpaceEntity(1),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
+        val motoRegisterSpace1 = motoRegisterSpaceTranslator.translateToDomain(
+            MotoRegisterSpaceEntity(
+                "moto1",
+                moto1,
+                ParkingSpaceEntity(1),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
+        val motoRegisterSpace2 = motoRegisterSpaceTranslator.translateToDomain(
+            MotoRegisterSpaceEntity(
+                "moto2",
+                moto2,
+                ParkingSpaceEntity(1),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
 
         //Assert
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
@@ -150,14 +163,16 @@ class MotorcycleRegisterSpaceRoomTest {
             //Arrange
 
             val moto1 = MotorcycleEntity("AAA000", 400)
-            val motoRegisterSpace1 = MotoRegisterSpaceEntity(
-                "moto1",
-                moto1,
-                ParkingSpaceEntity(1),
-                Date(1657005294106),
-                null,
-                state = RegisterStateEntity.LOCKED
-            ).asDomain()
+            val motoRegisterSpace1 = motoRegisterSpaceTranslator.translateToDomain(
+                MotoRegisterSpaceEntity(
+                    "moto1",
+                    moto1,
+                    ParkingSpaceEntity(1),
+                    Date(1657005294106),
+                    null,
+                    state = RegisterStateEntity.LOCKED
+                )
+            )
             motorcycleRegisterRoom.register(motoRegisterSpace1)
 
             //Act

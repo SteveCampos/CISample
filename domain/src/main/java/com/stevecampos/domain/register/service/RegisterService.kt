@@ -20,7 +20,6 @@ abstract class RegisterService<V : Vehicle>(
     suspend fun register(vehicle: V, parkingSpace: ParkingSpace, startDate: Date) {
         if (vehicle.plateBeginsWithA() && (startDate.isSunday() || startDate.isMonday()))
             throw UnAuthorizedException()
-
         val spacesLockedForVehicleType =
             registerRepository.getRegisteredSpaces(state = RegisteredState.Locked)
 
@@ -47,5 +46,9 @@ abstract class RegisterService<V : Vehicle>(
     suspend fun endRegisterSpace(registeredSpace: RegisteredSpace<V>, endDate: Date) {
         val space = registeredSpace.copy(endDate = endDate, state = RegisteredState.Finished)
         registerRepository.finishRegisterSpaced(space)
+    }
+
+    suspend fun getRegisteredSpaces(): List<RegisteredSpace<V>> {
+        return registerRepository.getRegisteredSpaces(RegisteredState.Locked)
     }
 }

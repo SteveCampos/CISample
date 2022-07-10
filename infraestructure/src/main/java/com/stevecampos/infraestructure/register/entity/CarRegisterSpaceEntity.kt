@@ -3,9 +3,6 @@ package com.stevecampos.infraestructure.register.entity
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.stevecampos.domain.register.aggregate.RegisteredSpace
-import com.stevecampos.domain.register.entity.ParkingSpace
-import com.stevecampos.domain.vehicle.entity.Car
 import com.stevecampos.infraestructure.vehicle.entity.CarEntity
 import java.util.*
 
@@ -21,14 +18,3 @@ data class CarRegisterSpaceEntity(
     val endDate: Date?,
     val state: RegisterStateEntity
 )
-
-fun CarRegisterSpaceEntity.asDomain(): RegisteredSpace<Car> {
-    return RegisteredSpace<Car>(
-        id = this.id,
-        vehicle = Car(this.car.plate),
-        parkingSpace = ParkingSpace(this.parkingSpaceEntity.id),
-        startDate = this.startDate,
-        endDate = this.endDate,
-        state = this.state.asDomain()
-    )
-}

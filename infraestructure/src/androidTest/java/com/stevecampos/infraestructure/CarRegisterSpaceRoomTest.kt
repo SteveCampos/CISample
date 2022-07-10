@@ -5,11 +5,11 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.stevecampos.domain.register.aggregate.RegisteredState
+import com.stevecampos.infraestructure.register.anticorrupt.CarRegisterSpaceTranslator
 import com.stevecampos.infraestructure.share.ParkingDatabase
 import com.stevecampos.infraestructure.register.entity.CarRegisterSpaceEntity
 import com.stevecampos.infraestructure.register.entity.ParkingSpaceEntity
 import com.stevecampos.infraestructure.register.entity.RegisterStateEntity
-import com.stevecampos.infraestructure.register.entity.asDomain
 import com.stevecampos.infraestructure.register.exception.RegisterSpaceNotSavedException
 import com.stevecampos.infraestructure.register.repository.CarRegisterRoom
 import com.stevecampos.infraestructure.vehicle.entity.CarEntity
@@ -28,6 +28,8 @@ class CarRegisterSpaceRoomTest {
 
     private lateinit var db: ParkingDatabase
     private lateinit var carRegisterRoom: CarRegisterRoom
+
+    private val carRegisterSpaceTranslator = CarRegisterSpaceTranslator()
 
     @Before
     fun createDb() {
@@ -50,14 +52,15 @@ class CarRegisterSpaceRoomTest {
 
         //Arrange
 
-        val carRegisterSpace = CarRegisterSpaceEntity(
+        val carRegisterSpaceEntity = CarRegisterSpaceEntity(
             id = UUID.randomUUID().toString(),
             car = CarEntity("AAA000"),
             parkingSpaceEntity = ParkingSpaceEntity(1),
             startDate = Date(1656945638133),
             endDate = null,
             state = RegisterStateEntity.LOCKED
-        ).asDomain()
+        )
+        val carRegisterSpace = carRegisterSpaceTranslator.translateToDomain(carRegisterSpaceEntity)
         //Act
         carRegisterRoom.register(carRegisterSpace)
         //Assert
@@ -72,22 +75,26 @@ class CarRegisterSpaceRoomTest {
         val car1 = CarEntity("AAA000")
         val car2 = CarEntity("AAA000")
 
-        val carRegisterSpace1 = CarRegisterSpaceEntity(
-            "car1",
-            car1,
-            ParkingSpaceEntity(1),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
-        val carRegisterSpace2 = CarRegisterSpaceEntity(
-            "car2",
-            car2,
-            ParkingSpaceEntity(2),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
+        val carRegisterSpace1 = carRegisterSpaceTranslator.translateToDomain(
+            CarRegisterSpaceEntity(
+                "car1",
+                car1,
+                ParkingSpaceEntity(1),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
+        val carRegisterSpace2 = carRegisterSpaceTranslator.translateToDomain(
+            CarRegisterSpaceEntity(
+                "car2",
+                car2,
+                ParkingSpaceEntity(2),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
 
         //Assert
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
@@ -106,22 +113,26 @@ class CarRegisterSpaceRoomTest {
         val car1 = CarEntity("AAA000")
         val car2 = CarEntity("AAA001")
 
-        val carRegisterSpace1 = CarRegisterSpaceEntity(
-            "car1",
-            car1,
-            ParkingSpaceEntity(1),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
-        val carRegisterSpace2 = CarRegisterSpaceEntity(
-            "car2",
-            car2,
-            ParkingSpaceEntity(1),
-            Date(1657005294106),
-            null,
-            state = RegisterStateEntity.LOCKED
-        ).asDomain()
+        val carRegisterSpace1 = carRegisterSpaceTranslator.translateToDomain(
+            CarRegisterSpaceEntity(
+                "car1",
+                car1,
+                ParkingSpaceEntity(1),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
+        val carRegisterSpace2 = carRegisterSpaceTranslator.translateToDomain(
+            CarRegisterSpaceEntity(
+                "car2",
+                car2,
+                ParkingSpaceEntity(1),
+                Date(1657005294106),
+                null,
+                state = RegisterStateEntity.LOCKED
+            )
+        )
 
         //Assert
         Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
@@ -151,14 +162,16 @@ class CarRegisterSpaceRoomTest {
             //Arrange
 
             val car1 = CarEntity("AAA000")
-            val carRegisterSpace1 = CarRegisterSpaceEntity(
+            val carRegisterSpace1Entity = CarRegisterSpaceEntity(
                 "car1",
                 car1,
                 ParkingSpaceEntity(1),
                 Date(1657005294106),
                 null,
                 state = RegisterStateEntity.LOCKED
-            ).asDomain()
+            )
+            val carRegisterSpace1 =
+                carRegisterSpaceTranslator.translateToDomain(carRegisterSpace1Entity)
             carRegisterRoom.register(carRegisterSpace1)
 
             //Act
