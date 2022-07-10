@@ -1,4 +1,4 @@
-package com.stevecampos.infraestructure.data.entity
+package com.stevecampos.infraestructure.register.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

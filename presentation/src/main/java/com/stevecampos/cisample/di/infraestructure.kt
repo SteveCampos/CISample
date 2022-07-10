@@ -4,11 +4,11 @@ import com.stevecampos.domain.register.repository.CarRegisterRepository
 import com.stevecampos.domain.register.repository.MotorcycleRegisterRepository
 import com.stevecampos.domain.register.service.CarRegisterService
 import com.stevecampos.domain.register.service.MotorcycleRegisterService
-import com.stevecampos.infraestructure.data.dao.CarRegisterSpaceDao
-import com.stevecampos.infraestructure.data.dao.MotoRegisterSpaceDao
-import com.stevecampos.infraestructure.data.db.ParkingDatabase
-import com.stevecampos.infraestructure.data.repository.CarRegisterRoom
-import com.stevecampos.infraestructure.data.repository.MotorcycleRegisterRoom
+import com.stevecampos.infraestructure.register.dao.CarRegisterSpaceDao
+import com.stevecampos.infraestructure.register.dao.MotoRegisterSpaceDao
+import com.stevecampos.infraestructure.share.ParkingDatabase
+import com.stevecampos.infraestructure.register.repository.CarRegisterRoom
+import com.stevecampos.infraestructure.register.repository.MotorcycleRegisterRoom
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 

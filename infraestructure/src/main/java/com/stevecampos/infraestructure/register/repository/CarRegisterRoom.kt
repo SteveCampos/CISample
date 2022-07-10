@@ -1,23 +1,23 @@
-package com.stevecampos.infraestructure.data.repository
+package com.stevecampos.infraestructure.register.repository
 
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.aggregate.RegisteredState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.repository.CarRegisterRepository
 import com.stevecampos.domain.vehicle.entity.Car
-import com.stevecampos.infraestructure.data.anticorrupt.CarRegisterSpaceTranslator
-import com.stevecampos.infraestructure.data.dao.CarRegisterSpaceDao
-import com.stevecampos.infraestructure.data.entity.RegisterStateEntity
-import com.stevecampos.infraestructure.data.entity.asDomain
-import com.stevecampos.infraestructure.data.entity.toExternal
-import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotFinishedException
-import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotSavedException
+import com.stevecampos.infraestructure.register.anticorrupt.CarRegisterSpaceTranslator
+import com.stevecampos.infraestructure.register.dao.CarRegisterSpaceDao
+import com.stevecampos.infraestructure.register.entity.RegisterStateEntity
+import com.stevecampos.infraestructure.register.entity.asDomain
+import com.stevecampos.infraestructure.register.entity.toExternal
+import com.stevecampos.infraestructure.register.exception.RegisterSpaceNotFinishedException
+import com.stevecampos.infraestructure.register.exception.RegisterSpaceNotSavedException
 
 class CarRegisterRoom(private val carRegisterSpaceDao: CarRegisterSpaceDao) :
     CarRegisterRepository {
     override suspend fun register(registeredSpace: RegisteredSpace<Car>) {
         val carRegisterSpaceTranslator = CarRegisterSpaceTranslator()
-        val carRegisterSpaceEntity = carRegisterSpaceTranslator.map(registeredSpace)
+        val carRegisterSpaceEntity = carRegisterSpaceTranslator.translateToInfrastructure(registeredSpace)
         val rowsAffected = carRegisterSpaceDao.saveCarRegisterSpace(carRegisterSpaceEntity)
         if (rowsAffected.toInt() != 1){
             throw RegisterSpaceNotSavedException()

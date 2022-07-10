@@ -1,19 +1,20 @@
-package com.stevecampos.infraestructure.data.entity
+package com.stevecampos.infraestructure.register.entity
 
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.entity.ParkingSpace
-import com.stevecampos.domain.vehicle.entity.Car
+import com.stevecampos.domain.vehicle.entity.Motorcycle
+import com.stevecampos.infraestructure.vehicle.entity.MotorcycleEntity
 import java.util.*
 
-@Entity(tableName = "car_register_space")
-data class CarRegisterSpaceEntity(
+@Entity(tableName = "moto_register_space")
+data class MotoRegisterSpaceEntity(
     @PrimaryKey
     val id: String,
     @Embedded
-    val car: CarEntity,
+    val moto: MotorcycleEntity,
     @Embedded
     val parkingSpaceEntity: ParkingSpaceEntity,
     val startDate: Date,
@@ -21,10 +22,10 @@ data class CarRegisterSpaceEntity(
     val state: RegisterStateEntity
 )
 
-fun CarRegisterSpaceEntity.asDomain(): RegisteredSpace<Car> {
-    return RegisteredSpace<Car>(
+fun MotoRegisterSpaceEntity.asDomain(): RegisteredSpace<Motorcycle> {
+    return RegisteredSpace<Motorcycle>(
         id = this.id,
-        vehicle = Car(this.car.plate),
+        vehicle = Motorcycle(this.moto.plate, this.moto.cylinderCapacity),
         parkingSpace = ParkingSpace(this.parkingSpaceEntity.id),
         startDate = this.startDate,
         endDate = this.endDate,

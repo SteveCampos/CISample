@@ -1,4 +1,4 @@
-package com.stevecampos.infraestructure.data.db
+package com.stevecampos.infraestructure.share
 
 import androidx.room.TypeConverter
 import java.util.*

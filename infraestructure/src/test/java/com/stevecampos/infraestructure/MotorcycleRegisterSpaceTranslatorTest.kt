@@ -4,7 +4,7 @@ import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.aggregate.RegisteredState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.vehicle.entity.Motorcycle
-import com.stevecampos.infraestructure.data.anticorrupt.MotoRegisterSpaceTranslator
+import com.stevecampos.infraestructure.register.anticorrupt.MotoRegisterSpaceTranslator
 import org.junit.Assert
 import org.junit.Test
 import java.util.*

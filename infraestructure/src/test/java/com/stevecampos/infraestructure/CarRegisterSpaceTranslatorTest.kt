@@ -4,7 +4,7 @@ import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.aggregate.RegisteredState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.vehicle.entity.Car
-import com.stevecampos.infraestructure.data.anticorrupt.CarRegisterSpaceTranslator
+import com.stevecampos.infraestructure.register.anticorrupt.CarRegisterSpaceTranslator
 import org.junit.Assert
 import org.junit.Test
 import java.util.*
@@ -24,7 +24,7 @@ class CarRegisterSpaceTranslatorTest {
         )
         val translator = CarRegisterSpaceTranslator()
         //Act
-        val infrastructureEntity = translator.map(domainEntity)
+        val infrastructureEntity = translator.translateToInfrastructure(domainEntity)
         //Assert
         Assert.assertEquals(id, infrastructureEntity.id)
     }

@@ -1,4 +1,4 @@
-package com.stevecampos.infraestructure.data.entity
+package com.stevecampos.infraestructure.register.entity
 
 import com.stevecampos.domain.register.aggregate.RegisteredState
 

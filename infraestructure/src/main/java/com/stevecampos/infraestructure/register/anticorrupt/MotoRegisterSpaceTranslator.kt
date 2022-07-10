@@ -1,8 +1,11 @@
-package com.stevecampos.infraestructure.data.anticorrupt
+package com.stevecampos.infraestructure.register.anticorrupt
 
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.vehicle.entity.Motorcycle
-import com.stevecampos.infraestructure.data.entity.*
+import com.stevecampos.infraestructure.register.entity.MotoRegisterSpaceEntity
+import com.stevecampos.infraestructure.register.entity.ParkingSpaceEntity
+import com.stevecampos.infraestructure.register.entity.toExternal
+import com.stevecampos.infraestructure.vehicle.entity.MotorcycleEntity
 
 class MotoRegisterSpaceTranslator :
     Translator<RegisteredSpace<Motorcycle>, MotoRegisterSpaceEntity> {

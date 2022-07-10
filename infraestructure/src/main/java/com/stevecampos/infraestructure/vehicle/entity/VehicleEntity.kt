@@ -1,3 +1,3 @@
-package com.stevecampos.infraestructure.data.entity
+package com.stevecampos.infraestructure.vehicle.entity
 
 abstract class VehicleEntity(private val plate: String)

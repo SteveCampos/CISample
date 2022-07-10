@@ -1,16 +1,16 @@
-package com.stevecampos.infraestructure.data.repository
+package com.stevecampos.infraestructure.register.repository
 
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.aggregate.RegisteredState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.repository.MotorcycleRegisterRepository
 import com.stevecampos.domain.vehicle.entity.Motorcycle
-import com.stevecampos.infraestructure.data.anticorrupt.MotoRegisterSpaceTranslator
-import com.stevecampos.infraestructure.data.dao.MotoRegisterSpaceDao
-import com.stevecampos.infraestructure.data.entity.RegisterStateEntity
-import com.stevecampos.infraestructure.data.entity.asDomain
-import com.stevecampos.infraestructure.data.entity.toExternal
-import com.stevecampos.infraestructure.data.exception.RegisterSpaceNotSavedException
+import com.stevecampos.infraestructure.register.anticorrupt.MotoRegisterSpaceTranslator
+import com.stevecampos.infraestructure.register.dao.MotoRegisterSpaceDao
+import com.stevecampos.infraestructure.register.entity.RegisterStateEntity
+import com.stevecampos.infraestructure.register.entity.asDomain
+import com.stevecampos.infraestructure.register.entity.toExternal
+import com.stevecampos.infraestructure.register.exception.RegisterSpaceNotSavedException
 
 class MotorcycleRegisterRoom(private val motoRegisterSpaceDao: MotoRegisterSpaceDao) :
     MotorcycleRegisterRepository {

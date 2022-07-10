@@ -1,4 +1,4 @@
-package com.stevecampos.infraestructure.data.anticorrupt
+package com.stevecampos.infraestructure.register.anticorrupt
 
 interface Translator<in T, out R> {
     fun map(origin: T): R

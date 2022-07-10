@@ -1,11 +1,11 @@
-package com.stevecampos.infraestructure.data.dao
+package com.stevecampos.infraestructure.register.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.stevecampos.infraestructure.data.entity.CarRegisterSpaceEntity
-import com.stevecampos.infraestructure.data.entity.RegisterStateEntity
+import com.stevecampos.infraestructure.register.entity.CarRegisterSpaceEntity
+import com.stevecampos.infraestructure.register.entity.RegisterStateEntity
 
 @Dao
 interface CarRegisterSpaceDao {
