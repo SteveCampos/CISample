@@ -18,9 +18,6 @@ class MotorcycleRegisterRoom(private val motoRegisterSpaceDao: MotoRegisterSpace
         val motoRegisterSpaceEntity =
             motoRegisterSpaceTranslator.translateToInfrastructure(registeredSpace)
         val rowsAffected = motoRegisterSpaceDao.saveMotoRegisterSpace(motoRegisterSpaceEntity)
-        if (rowsAffected.toInt() != 1) {
-            throw RegisterSpaceNotSavedException()
-        }
     }
 
     override suspend fun getRegisteredSpaces(state: RegisteredState): List<RegisteredSpace<Motorcycle>> {

@@ -4,6 +4,7 @@ import android.app.Application
 import com.stevecampos.cisample.di.domainModule
 import com.stevecampos.cisample.di.infrastructureModule
 import com.stevecampos.cisample.di.presentationModule
+import com.stevecampos.cisample.di.register.registerCarModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -22,7 +23,8 @@ class ParkingApp : Application() {
             modules(
                 domainModule,
                 infrastructureModule,
-                presentationModule
+                presentationModule,
+                registerCarModules
             )
         }
     }

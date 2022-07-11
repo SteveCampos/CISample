@@ -133,7 +133,7 @@ fun <T> ViewModel.executeTask(
             withContext(Dispatchers.Main) {
                 onSuccess.invoke(result)
             }
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             withContext(Dispatchers.Main) {
                 onFailure.invoke(e)
             }

@@ -16,14 +16,14 @@ import com.stevecampos.infraestructure.vehicle.entity.MotorcycleEntity
 @Database(
     entities = [
         MotoRegisterSpaceEntity::class, CarRegisterSpaceEntity::class, CarEntity::class, MotorcycleEntity::class, ParkingSpaceEntity::class
-    ], version = 1, exportSchema = false
+    ], version = 2, exportSchema = false
 )
 @TypeConverters(DateConverter::class)
 abstract class ParkingDatabase : RoomDatabase() {
     abstract val carRegisterSpaceDao: CarRegisterSpaceDao
     abstract val motoRegisterSpaceDao: MotoRegisterSpaceDao
 
-    companion object{
+    companion object {
         fun provideDatabase(context: Context): ParkingDatabase {
             return Room.databaseBuilder(
                 context,

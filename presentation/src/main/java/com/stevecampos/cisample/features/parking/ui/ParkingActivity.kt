@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -27,16 +28,20 @@ import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.stevecampos.cisample.R
+import com.stevecampos.cisample.features.parking.destination.ParkingDestination
+import com.stevecampos.cisample.features.parking.destination.parkingRegisterGraph
 import com.stevecampos.cisample.features.parking.vm.ParkingUiState
 import com.stevecampos.cisample.features.parking.vm.ParkingViewModel
+import com.stevecampos.cisample.features.register.car.navigation.RegisterCarDestination
+import com.stevecampos.cisample.features.register.car.navigation.registerCarGraph
 import com.stevecampos.cisample.ui.theme.CISampleTheme
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.entity.ParkingSpace
@@ -50,29 +55,52 @@ class ParkingActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CISampleTheme {
-                ParkingRoute()
+                ParkingNavController()
             }
         }
     }
 }
 
 @Composable
+fun ParkingNavController() {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = ParkingDestination.route
+    ) {
+        parkingRegisterGraph(onCarEmptyParkSpaceSelected = {
+            navController.navigate("${RegisterCarDestination.route}/${it.id}")
+        }, onCarRegisteredSpaceSelected = {
+
+        })
+        registerCarGraph {}
+    }
+}
+
+@Composable
 fun ParkingRoute(
     modifier: Modifier = Modifier,
-    viewModel: ParkingViewModel = get()
+    viewModel: ParkingViewModel = get(),
+    onCarRegisteredSpaceSelected: (RegisteredSpace<Car>) -> Unit,
+    onCarEmptyParkSpaceSelected: (ParkingSpace) -> Unit
 ) {
     val uiState: ParkingUiState by viewModel.parkingUiState.collectAsState()
 
+
     ParkingScreen(
         parkingState = uiState,
-        modifier = modifier
+        modifier = modifier,
+        onCarRegisteredSpaceSelected = onCarRegisteredSpaceSelected,
+        onCarEmptyParkSpaceSelected = onCarEmptyParkSpaceSelected,
     )
 }
 
 @Composable
 internal fun ParkingScreen(
     parkingState: ParkingUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCarRegisteredSpaceSelected: (RegisteredSpace<Car>) -> Unit,
+    onCarEmptyParkSpaceSelected: (ParkingSpace) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -92,8 +120,11 @@ internal fun ParkingScreen(
             is ParkingUiState.ParkingLoadingState -> LoadingWidget()
             is ParkingUiState.ParkingErrorState -> FailedToLoadWidget(parkingState.errorMsg) {}
             is ParkingUiState.ParkingSuccessState -> ParkingBody(
-                parkingState.carSpacesFilled,
-                parkingState.motoSpacesFilled
+                modifier = modifier,
+                carSpacesFilled = parkingState.carSpacesFilled,
+                motoSpacesFilled = parkingState.motoSpacesFilled,
+                onCarRegisteredSpaceSelected = onCarRegisteredSpaceSelected,
+                onCarEmptyParkSpaceSelected = onCarEmptyParkSpaceSelected
             )
         }
     }
@@ -101,9 +132,11 @@ internal fun ParkingScreen(
 
 @Composable
 fun ParkingBody(
+    modifier: Modifier = Modifier,
     carSpacesFilled: List<Pair<ParkingSpace, RegisteredSpace<Car>?>>,
     motoSpacesFilled: List<Pair<ParkingSpace, RegisteredSpace<Motorcycle>?>>,
-    modifier: Modifier = Modifier
+    onCarRegisteredSpaceSelected: (RegisteredSpace<Car>) -> Unit,
+    onCarEmptyParkSpaceSelected: (ParkingSpace) -> Unit
 ) {
     Row(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -115,7 +148,11 @@ fun ParkingBody(
             contentAlignment = Alignment.TopStart
         ) {
             LazyColumn(modifier) {
-                carSpacesBody(carSpacesFilled)
+                carSpacesBody(
+                    carSpacesFilled = carSpacesFilled,
+                    onCarRegisteredSpaceSelected = onCarRegisteredSpaceSelected,
+                    onCarEmptyParkSpaceSelected = onCarEmptyParkSpaceSelected
+                )
             }
         }
         Box(
@@ -127,19 +164,29 @@ fun ParkingBody(
             contentAlignment = Alignment.TopEnd
         ) {
             LazyColumn(modifier) {
-                carSpacesBody(carSpacesFilled)
+                carSpacesBody(
+                    carSpacesFilled = carSpacesFilled,
+                    onCarRegisteredSpaceSelected = onCarRegisteredSpaceSelected,
+                    onCarEmptyParkSpaceSelected = onCarEmptyParkSpaceSelected
+                )
             }
         }
     }
 }
 
 private fun LazyListScope.carSpacesBody(
-    carSpacesFilled: List<Pair<ParkingSpace, RegisteredSpace<Car>?>>
+    carSpacesFilled: List<Pair<ParkingSpace, RegisteredSpace<Car>?>>,
+    onCarRegisteredSpaceSelected: (RegisteredSpace<Car>) -> Unit,
+    onCarEmptyParkSpaceSelected: (ParkingSpace) -> Unit
 ) {
     item {
         CarHeader()
     }
-    carSpacesItems(carSpacesFilled)
+    carSpacesItems(
+        items = carSpacesFilled,
+        onCarRegisteredSpaceSelected = onCarRegisteredSpaceSelected,
+        onCarEmptyParkSpaceSelected = onCarEmptyParkSpaceSelected
+    )
 }
 
 @Composable
@@ -149,26 +196,40 @@ fun CarHeader() {
 
 private fun LazyListScope.carSpacesItems(
     items: List<Pair<ParkingSpace, RegisteredSpace<Car>?>>,
-    itemModifier: Modifier = Modifier
+    itemModifier: Modifier = Modifier,
+    onCarRegisteredSpaceSelected: (RegisteredSpace<Car>) -> Unit,
+    onCarEmptyParkSpaceSelected: (ParkingSpace) -> Unit
 ) = items(
     items = items,
     //key = {},
     itemContent = { item ->
-        if (item.second == null)
-            EmptyParkingSpace(item.first)
-        else
-            FilledParkingSpace(item.first, item.second!!)
+        item.second?.let {
+            FilledParkingSpace(item.first, item.second!!, onCarRegisteredSpaceSelected)
+        } ?: kotlin.run {
+            EmptyParkingSpace(item.first, onCarEmptyParkSpaceSelected)
+        }
     }
 )
 
 @Composable
-fun FilledParkingSpace(first: ParkingSpace, second: RegisteredSpace<Car>) {
-    Text("FilledParkingSpace: ${second.vehicle.plate}")
+fun FilledParkingSpace(
+    first: ParkingSpace,
+    second: RegisteredSpace<Car>,
+    onCarRegisteredSpaceSelected: (RegisteredSpace<Car>) -> Unit
+) {
+    VehicleItem("FilledParkingSpace: ${second.vehicle.plate}") {
+        onCarRegisteredSpaceSelected.invoke(second)
+    }
 }
 
 @Composable
-fun EmptyParkingSpace(parkingSpace: ParkingSpace) {
-    Text("EmptyParkingSpace: ${parkingSpace.id}")
+fun EmptyParkingSpace(
+    parkingSpace: ParkingSpace,
+    onCarEmptyParkSpaceSelected: (ParkingSpace) -> Unit
+) {
+    VehicleItem("EmptyParkingSpace: ${parkingSpace.id}") {
+        onCarEmptyParkSpaceSelected.invoke(parkingSpace)
+    }
 }
 
 @Composable
@@ -229,12 +290,16 @@ fun CarParkingSpacesListWidget(parkingViewModel: ParkingViewModel = get()) {
 }
 
 @Composable
-fun VehicleItem(title: String) {
+fun VehicleItem(title: String, onItemClicked: () -> Unit = {}) {
     Card(
+
         backgroundColor = Color.White,
         modifier = Modifier
             .padding(top = 16.dp, bottom = 16.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onItemClicked()
+            },
         elevation = 4.dp
     ) {
         Column(Modifier.padding(16.dp)) {
@@ -328,7 +393,9 @@ fun EmptyParkSpaceWidget(position: Int) {
 fun ParkingScreenLoading() {
     CISampleTheme {
         ParkingScreen(
-            parkingState = ParkingUiState.ParkingLoadingState
+            parkingState = ParkingUiState.ParkingLoadingState,
+            modifier = Modifier,
+            {}, {}
         )
     }
 }
@@ -342,7 +409,10 @@ fun ParkingScreenLoading() {
 fun ParkingScreenError() {
     CISampleTheme {
         ParkingScreen(
-            parkingState = ParkingUiState.ParkingErrorState(errorMsg = stringResource(id = R.string.activity_parking_msg_error))
+            parkingState = ParkingUiState.ParkingErrorState(errorMsg = stringResource(id = R.string.activity_parking_msg_error)),
+            modifier = Modifier,
+            {},
+            {}
         )
     }
 }

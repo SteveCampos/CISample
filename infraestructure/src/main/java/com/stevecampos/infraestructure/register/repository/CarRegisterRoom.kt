@@ -1,5 +1,6 @@
 package com.stevecampos.infraestructure.register.repository
 
+import android.util.Log
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.aggregate.RegisteredState
 import com.stevecampos.domain.register.entity.ParkingSpace
@@ -18,10 +19,7 @@ class CarRegisterRoom(private val carRegisterSpaceDao: CarRegisterSpaceDao) :
         val carRegisterSpaceTranslator = CarRegisterSpaceTranslator()
         val carRegisterSpaceEntity =
             carRegisterSpaceTranslator.translateToInfrastructure(registeredSpace)
-        val rowsAffected = carRegisterSpaceDao.saveCarRegisterSpace(carRegisterSpaceEntity)
-        if (rowsAffected.toInt() != 1) {
-            throw RegisterSpaceNotSavedException()
-        }
+        carRegisterSpaceDao.saveCarRegisterSpace(carRegisterSpaceEntity)
     }
 
     override suspend fun getRegisteredSpaces(state: RegisteredState): List<RegisteredSpace<Car>> {

@@ -133,15 +133,13 @@ class CarRegisterSpaceRoomTest {
                 state = RegisterStateEntity.LOCKED
             )
         )
-
+        //Act
+        carRegisterRoom.register(carRegisterSpace1)
+        carRegisterRoom.register(carRegisterSpace2)
         //Assert
-        Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
-            runBlocking {
-                //Act
-                carRegisterRoom.register(carRegisterSpace1)
-                carRegisterRoom.register(carRegisterSpace2)
-            }
-        }
+
+        val items = carRegisterRoom.getRegisteredSpaces(RegisteredState.Locked)
+        Assert.assertEquals(1, items.size)
     }
 
     @Test
