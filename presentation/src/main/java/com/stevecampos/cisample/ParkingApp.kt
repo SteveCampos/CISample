@@ -1,10 +1,12 @@
 package com.stevecampos.cisample
 
 import android.app.Application
-import com.stevecampos.cisample.di.domainModule
-import com.stevecampos.cisample.di.infrastructureModule
-import com.stevecampos.cisample.di.presentationModule
-import com.stevecampos.cisample.di.register.registerCarModules
+import com.stevecampos.cisample.di.parkingSpaces.carParkingSpaceModule
+import com.stevecampos.cisample.di.parkingSpaces.motorcycleParkingSpaceModule
+import com.stevecampos.cisample.di.parkingSpaces.parkingSpaceModule
+import com.stevecampos.cisample.di.register.car.registerCarModule
+import com.stevecampos.cisample.di.register.motorcycle.registerMotorcycleModule
+import com.stevecampos.cisample.di.shared.databaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,10 +23,12 @@ class ParkingApp : Application() {
             androidLogger()
             androidContext(this@ParkingApp)
             modules(
-                domainModule,
-                infrastructureModule,
-                presentationModule,
-                registerCarModules
+                databaseModule,
+                parkingSpaceModule,
+                carParkingSpaceModule,
+                motorcycleParkingSpaceModule,
+                registerCarModule,
+                registerMotorcycleModule
             )
         }
     }

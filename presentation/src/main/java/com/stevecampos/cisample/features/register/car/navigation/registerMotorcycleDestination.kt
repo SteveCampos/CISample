@@ -1,8 +1,6 @@
 package com.stevecampos.cisample.features.register.car.navigation
 
-import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable

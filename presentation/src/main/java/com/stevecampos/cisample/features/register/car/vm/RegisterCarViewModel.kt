@@ -2,7 +2,7 @@ package com.stevecampos.cisample.features.register.car.vm
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.stevecampos.cisample.features.parking.vm.executeTask
+import com.stevecampos.cisample.features.parkingSpaces.vm.executeTask
 import com.stevecampos.cisample.features.register.car.ui.RegisterCarUiState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.service.CarRegisterService

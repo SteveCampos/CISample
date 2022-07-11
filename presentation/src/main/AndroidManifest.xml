@@ -15,7 +15,7 @@
             android:exported="true"
             android:theme="@style/Theme.CISample" />
         <activity
-            android:name=".features.parking.ui.ParkingActivity"
+            android:name=".features.parkingSpaces.ui.ParkingActivity"
             android:exported="true"
             android:theme="@style/Theme.CISample">
             <intent-filter>

@@ -2,5 +2,6 @@
     <string name="app_name">ParkingApp</string>
     <string name="activity_msg_reload">Reintentar</string>
     <string name="activity_parking_msg_error">Error loading parking</string>
-    <string name="activity_register_car_title">Registrar Carro</string>
+    <string name="activity_register_car_title">Registrar Car</string>
+    <string name="activity_register_motorycicle_title">Register Motorcycle</string>
 </resources>

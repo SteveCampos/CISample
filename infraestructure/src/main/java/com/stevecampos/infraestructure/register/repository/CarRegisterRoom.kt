@@ -1,6 +1,5 @@
 package com.stevecampos.infraestructure.register.repository
 
-import android.util.Log
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.aggregate.RegisteredState
 import com.stevecampos.domain.register.entity.ParkingSpace
@@ -11,7 +10,6 @@ import com.stevecampos.infraestructure.register.anticorrupt.RegisterStateTransla
 import com.stevecampos.infraestructure.register.dao.CarRegisterSpaceDao
 import com.stevecampos.infraestructure.register.entity.RegisterStateEntity
 import com.stevecampos.infraestructure.register.exception.RegisterSpaceNotFinishedException
-import com.stevecampos.infraestructure.register.exception.RegisterSpaceNotSavedException
 
 class CarRegisterRoom(private val carRegisterSpaceDao: CarRegisterSpaceDao) :
     CarRegisterRepository {
@@ -19,6 +17,22 @@ class CarRegisterRoom(private val carRegisterSpaceDao: CarRegisterSpaceDao) :
         val carRegisterSpaceTranslator = CarRegisterSpaceTranslator()
         val carRegisterSpaceEntity =
             carRegisterSpaceTranslator.translateToInfrastructure(registeredSpace)
+
+        val space = carRegisterSpaceDao.getRegisterSpaceForSpaceWithState(
+            registeredSpace.parkingSpace.id,
+            RegisterStateEntity.LOCKED
+        )
+        if (space != null)
+            throw IllegalStateException()
+        val vehicle = carRegisterSpaceDao.getRegisterSpaceForVehicleWithState(
+            registeredSpace.vehicle.plate,
+            RegisterStateEntity.LOCKED
+        )
+        if (vehicle != null)
+            throw IllegalStateException()
+
+
+
         carRegisterSpaceDao.saveCarRegisterSpace(carRegisterSpaceEntity)
     }
 

@@ -17,7 +17,21 @@ class MotorcycleRegisterRoom(private val motoRegisterSpaceDao: MotoRegisterSpace
         val motoRegisterSpaceTranslator = MotoRegisterSpaceTranslator()
         val motoRegisterSpaceEntity =
             motoRegisterSpaceTranslator.translateToInfrastructure(registeredSpace)
-        val rowsAffected = motoRegisterSpaceDao.saveMotoRegisterSpace(motoRegisterSpaceEntity)
+
+        val space = motoRegisterSpaceDao.getRegisterSpaceForSpaceWithState(
+            registeredSpace.parkingSpace.id,
+            RegisterStateEntity.LOCKED
+        )
+        if (space != null)
+            throw IllegalStateException()
+        val vehicle = motoRegisterSpaceDao.getRegisterSpaceForVehicleWithState(
+            registeredSpace.vehicle.plate,
+            RegisterStateEntity.LOCKED
+        )
+        if (vehicle != null)
+            throw IllegalStateException()
+
+        motoRegisterSpaceDao.saveMotoRegisterSpace(motoRegisterSpaceEntity)
     }
 
     override suspend fun getRegisteredSpaces(state: RegisteredState): List<RegisteredSpace<Motorcycle>> {

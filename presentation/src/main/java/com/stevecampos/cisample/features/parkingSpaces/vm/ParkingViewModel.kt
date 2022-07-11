@@ -1,4 +1,4 @@
-package com.stevecampos.cisample.features.parking.vm
+package com.stevecampos.cisample.features.parkingSpaces.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,24 +16,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class ParkingViewModel(
-    private val carParkingService: CarParkingSpaceService,
-    private val motorcycleParkingSpaceService: MotorcycleParkingSpaceService,
+    private val carParkingService: ParkingSpaceService<Car>,
+    private val motorcycleParkingSpaceService: ParkingSpaceService<Motorcycle>,
     private val carRegisterService: CarRegisterService,
     private val motorcycleRegisterService: MotorcycleRegisterService
 ) : ViewModel(), ParkingActions {
 
     private val _parkingUiState =
-        MutableStateFlow<ParkingUiState>(ParkingUiState.ParkingLoadingState)
+        MutableStateFlow<ParkingUiState>(ParkingUiState.ParkingSuccessState(listOf(), listOf()))
     val parkingUiState: StateFlow<ParkingUiState>
         get() = _parkingUiState
 
     init {
-        Log.d(TAG, "init")
         getParkingSpaces()
     }
 
     private fun getParkingSpaces() {
-        Log.d(TAG, "getParkingSpaces")
         executeTask(
             ::onGetParkingSpacesSuccess,
             ::onGetParkingSpacesFailed
@@ -43,18 +41,15 @@ class ParkingViewModel(
     }
 
     private fun onGetParkingSpacesFailed(throwable: Throwable) {
-        Log.d(TAG, "onGetParkingSpacesFailed: $throwable")
         _parkingUiState.value = ParkingUiState.ParkingErrorState(throwable.message ?: "error")
     }
 
     private fun onGetParkingSpacesSuccess(parkingSuccessState: ParkingUiState.ParkingSuccessState) {
-        Log.d(TAG, "onGetParkingSpacesSuccess: $parkingSuccessState")
         _parkingUiState.value = parkingSuccessState
     }
 
 
     private suspend fun getCombinedResult(): ParkingUiState.ParkingSuccessState {
-        Log.d(TAG, "getCombinedResult")
         val carSpaces = carParkingService.getParkingSpaces()
         val motoSpaces = motorcycleParkingSpaceService.getParkingSpaces()
         val carRegisteredSpaces = carRegisterService.getRegisteredSpaces()

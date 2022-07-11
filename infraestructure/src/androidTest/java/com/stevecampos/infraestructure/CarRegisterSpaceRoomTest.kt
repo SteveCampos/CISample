@@ -97,7 +97,7 @@ class CarRegisterSpaceRoomTest {
         )
 
         //Assert
-        Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
+        Assert.assertThrows(Throwable::class.java) {
             runBlocking {
                 //Act
                 carRegisterRoom.register(carRegisterSpace1)
@@ -133,13 +133,15 @@ class CarRegisterSpaceRoomTest {
                 state = RegisterStateEntity.LOCKED
             )
         )
-        //Act
-        carRegisterRoom.register(carRegisterSpace1)
-        carRegisterRoom.register(carRegisterSpace2)
-        //Assert
 
-        val items = carRegisterRoom.getRegisteredSpaces(RegisteredState.Locked)
-        Assert.assertEquals(1, items.size)
+        //Assert
+        Assert.assertThrows(Throwable::class.java) {
+            kotlinx.coroutines.runBlocking {
+                //Act
+                carRegisterRoom.register(carRegisterSpace1)
+                carRegisterRoom.register(carRegisterSpace2)
+            }
+        }
     }
 
     @Test

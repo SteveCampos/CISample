@@ -98,7 +98,7 @@ class MotorcycleRegisterSpaceRoomTest {
         )
 
         //Assert
-        Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
+        Assert.assertThrows(Throwable::class.java) {
             runBlocking {
                 //Act
                 motorcycleRegisterRoom.register(motoRegisterSpace1)
@@ -136,7 +136,7 @@ class MotorcycleRegisterSpaceRoomTest {
         )
 
         //Assert
-        Assert.assertThrows(RegisterSpaceNotSavedException::class.java) {
+        Assert.assertThrows(Throwable::class.java) {
             runBlocking {
                 //Act
                 motorcycleRegisterRoom.register(motoRegisterSpace1)
