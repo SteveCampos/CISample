@@ -5,6 +5,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.stevecampos.cisample.features.shared.ui.CardItem
+import com.stevecampos.cisample.features.shared.ui.EmptyParkingSpace
 import com.stevecampos.domain.register.aggregate.RegisteredSpace
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.vehicle.entity.Car
@@ -52,7 +54,7 @@ fun FilledCarParkingSpace(
     second: RegisteredSpace<Car>,
     onCarRegisteredSpaceSelected: (RegisteredSpace<Car>) -> Unit
 ) {
-    VehicleItem("FilledParkingSpace: ${second.vehicle.plate}") {
+    CardItem("FilledParkingSpace: ${second.vehicle.plate}") {
         onCarRegisteredSpaceSelected.invoke(second)
     }
 }

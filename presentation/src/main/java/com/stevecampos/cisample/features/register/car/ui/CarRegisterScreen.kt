@@ -27,7 +27,7 @@ fun RegisterCarRoute(
 ) {
     val uiState: RegisterCarUiState by viewModel.registerCarViewState.collectAsState()
 
-    AuthorScreen(
+    RegisterCarScreen(
         registerCarState = uiState,
         onBackClick = onBackClick,
         modifier = modifier,
@@ -42,7 +42,7 @@ fun RegisterCarRoute(
 
 @VisibleForTesting
 @Composable
-internal fun AuthorScreen(
+internal fun RegisterCarScreen(
     registerCarState: RegisterCarUiState,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,

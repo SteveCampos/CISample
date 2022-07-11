@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.stevecampos.cisample.R
 import com.stevecampos.cisample.features.parkingSpaces.vm.ParkingUiState
 import com.stevecampos.cisample.features.parkingSpaces.vm.ParkingViewModel
+import com.stevecampos.cisample.features.shared.ui.CardItem
 import com.stevecampos.cisample.features.shared.ui.FailedToLoadWidget
 import com.stevecampos.cisample.features.shared.ui.LoadingWidget
 import com.stevecampos.cisample.ui.theme.CISampleTheme
@@ -136,41 +137,6 @@ fun ParkingBody(
         }
     }
 }
-
-@Composable
-fun VehicleItem(title: String, onItemClicked: () -> Unit = {}) {
-    Card(
-
-        backgroundColor = Color.White,
-        modifier = Modifier
-            .padding(top = 16.dp, bottom = 16.dp)
-            .fillMaxWidth()
-            .clickable {
-                onItemClicked()
-            },
-        elevation = 4.dp
-    ) {
-        Column(Modifier.padding(16.dp)) {
-            Text(
-                text = title,
-                color = MaterialTheme.colors.primary,
-                style = MaterialTheme.typography.h6
-            )
-        }
-    }
-}
-
-@Composable
-fun EmptyParkingSpace(
-    parkingSpace: ParkingSpace,
-    onCarEmptyParkSpaceSelected: (ParkingSpace) -> Unit
-) {
-    VehicleItem("EmptyParkingSpace: ${parkingSpace.id}") {
-        onCarEmptyParkSpaceSelected.invoke(parkingSpace)
-    }
-}
-
-
 
 @Preview(name = "phone", device = "spec:shape=Normal,width=360,height=640,unit=dp,dpi=480")
 @Preview(name = "landscape", device = "spec:shape=Normal,width=640,height=360,unit=dp,dpi=480")
