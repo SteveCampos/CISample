@@ -1,12 +1,12 @@
 package com.stevecampos.cisample
 
 import android.app.Application
-import com.stevecampos.cisample.di.parkingSpaces.carParkingSpaceModule
-import com.stevecampos.cisample.di.parkingSpaces.motorcycleParkingSpaceModule
-import com.stevecampos.cisample.di.parkingSpaces.parkingSpaceModule
-import com.stevecampos.cisample.di.register.car.registerCarModule
-import com.stevecampos.cisample.di.register.motorcycle.registerMotorcycleModule
-import com.stevecampos.cisample.di.shared.databaseModule
+import com.stevecampos.cisample.parkingspaces.dependencyinjection.carParkingSpaceModule
+import com.stevecampos.cisample.parkingspaces.dependencyinjection.motorcycleParkingSpaceModule
+import com.stevecampos.cisample.parkingspaces.dependencyinjection.parkingSpaceModule
+import com.stevecampos.cisample.register.car.dependencyinjection.registerCarModule
+import com.stevecampos.cisample.register.motorcycle.dependencyinjection.registerMotorcycleModule
+import com.stevecampos.cisample.shared.dependencyinjection.databaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

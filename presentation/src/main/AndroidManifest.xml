@@ -11,11 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CISample">
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.CISample" />
-        <activity
-            android:name=".features.parkingSpaces.ui.ParkingActivity"
+            android:name=".parkingspaces.ui.ParkingActivity"
             android:exported="true"
             android:theme="@style/Theme.CISample">
             <intent-filter>

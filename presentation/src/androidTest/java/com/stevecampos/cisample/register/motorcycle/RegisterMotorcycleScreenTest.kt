@@ -3,9 +3,9 @@ package com.stevecampos.cisample.register.motorcycle
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import com.stevecampos.cisample.features.register.motorcycle.ui.RegisterMotorcycleScreen
-import com.stevecampos.cisample.features.register.motorcycle.ui.RegisterMotorcycleUiState
-import com.stevecampos.cisample.ui.theme.CISampleTheme
+import com.stevecampos.cisample.register.motorcycle.ui.RegisterMotorcycleScreen
+import com.stevecampos.cisample.register.motorcycle.ui.RegisterMotorcycleUiState
+import com.stevecampos.cisample.shared.theme.CISampleTheme
 import org.junit.Rule
 import org.junit.Test
 
