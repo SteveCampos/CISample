@@ -26,7 +26,10 @@ pipeline {
   stage('Unit Tests') {
     steps{
       echo "------------>Unit Tests<------------"
+      sh 'chmod +x ./gradlew'
       sh './gradlew clean'
+      sh './gradlew build -x test'
+      sh './gradlew build -x connectedAndroidTest'
       sh './gradlew test'
       sh './gradlew connectedAndroidTest'
       sh './gradlew jacocoTestReport'
