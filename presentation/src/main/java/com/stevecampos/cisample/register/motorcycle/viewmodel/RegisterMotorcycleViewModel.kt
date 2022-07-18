@@ -1,14 +1,15 @@
-package com.stevecampos.cisample.register.motorcycle.vm
+package com.stevecampos.cisample.register.motorcycle.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.stevecampos.cisample.parkingspaces.vm.executeTask
+import com.stevecampos.cisample.parkingspaces.viewmodel.executeTask
 import com.stevecampos.cisample.register.motorcycle.ui.RegisterMotorcycleUiState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.service.MotorcycleRegisterService
 import com.stevecampos.domain.vehicle.entity.Motorcycle
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.time.Instant
 import java.util.*
 
 class RegisterMotorcycleViewModel(
@@ -40,7 +41,7 @@ class RegisterMotorcycleViewModel(
 
             val motorcycle = Motorcycle(plate, cylinderCapacity.toInt())
             val parkingSpace = ParkingSpace(parkingSpaceId)
-            val date = Date(1657477970)
+            val date = Date.from(Instant.now())
             motorcycleRegisterService.register(motorcycle, parkingSpace, date)
         }
 

@@ -1,5 +1,8 @@
 package com.stevecampos.cisample.register.motorcycle
 
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -29,7 +32,11 @@ class RegisterMotorcycleScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("LoadingWidgetTestTag").assertIsDisplayed()
+        val progressIndeterminateMatcher = SemanticsMatcher.expectValue(
+            SemanticsProperties.ProgressBarRangeInfo, ProgressBarRangeInfo.Indeterminate
+        )
+
+        composeTestRule.onNode(progressIndeterminateMatcher).assertIsDisplayed()
     }
     @Test
     fun registerMotorcycleScreen_whenErrorState_souldFailedToLoadWidgetBeDisplayed() {
@@ -46,6 +53,10 @@ class RegisterMotorcycleScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("FailedToLoadWidgetTestTag").assertIsDisplayed()
+        val errorSemanticsMatcher = SemanticsMatcher.expectValue(
+            SemanticsProperties.ContentDescription, listOf("Error Widget")
+        )
+
+        composeTestRule.onNode(errorSemanticsMatcher).assertIsDisplayed()
     }
 }

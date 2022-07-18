@@ -1,15 +1,17 @@
 package com.stevecampos.cisample.parkingSpaces
 
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import com.stevecampos.cisample.parkingspaces.ui.ParkingScreen
-import com.stevecampos.cisample.parkingspaces.vm.ParkingUiState
+import com.stevecampos.cisample.parkingspaces.viewmodel.ParkingUiState
 import com.stevecampos.cisample.shared.theme.CISampleTheme
 import org.junit.Rule
 import org.junit.Test
 
-class ParkingScreenTest {
+class ParkingSpaceScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -28,8 +30,12 @@ class ParkingScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("LoadingWidgetTestTag").assertIsDisplayed()
+        val semanticsMatcher = SemanticsMatcher.expectValue(
+            SemanticsProperties.ProgressBarRangeInfo, ProgressBarRangeInfo.Indeterminate
+        )
+        composeTestRule.onNode(semanticsMatcher).assertIsDisplayed()
     }
+
     @Test
     fun parkingScreen_whenErrorState_shouldFailedToLoadWidgetBeDisplayed() {
         // Start the app
@@ -45,6 +51,9 @@ class ParkingScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag("FailedToLoadWidgetTestTag").assertIsDisplayed()
+        val matcher = SemanticsMatcher.expectValue(
+            SemanticsProperties.ContentDescription, listOf("Error Widget")
+        )
+        composeTestRule.onNode(matcher).assertIsDisplayed()
     }
 }

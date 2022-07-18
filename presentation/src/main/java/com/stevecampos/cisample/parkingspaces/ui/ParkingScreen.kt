@@ -1,11 +1,14 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.stevecampos.cisample.parkingspaces.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.stevecampos.cisample.R
-import com.stevecampos.cisample.parkingspaces.vm.ParkingUiState
-import com.stevecampos.cisample.parkingspaces.vm.ParkingViewModel
+import com.stevecampos.cisample.parkingspaces.viewmodel.ParkingUiState
+import com.stevecampos.cisample.parkingspaces.viewmodel.ParkingViewModel
 import com.stevecampos.cisample.shared.composecomponents.FailedToLoadWidget
 import com.stevecampos.cisample.shared.composecomponents.LoadingWidget
 import com.stevecampos.cisample.shared.theme.CISampleTheme
@@ -64,11 +67,6 @@ internal fun ParkingScreen(
             TopAppBar(
                 title = {
                     Text(text = stringResource(R.string.app_name))
-                },
-                actions = {
-                    IconButton(onClick = { /* doSomething() */ }) {
-                        Icon(Icons.Filled.Favorite, contentDescription = null)
-                    }
                 }
             )
         }
@@ -109,29 +107,43 @@ fun ParkingBody(
                 .padding(8.dp),
             contentAlignment = Alignment.TopStart
         ) {
-            LazyColumn(modifier) {
-                motorcycleSpacesBody(
-                    motorcycleSpacesFilled = motorcycleSpacesFilled,
-                    onMotorcycleRegisteredSpaceSelected = onMotorcycleRegisteredSpaceSelected,
-                    onMotorcycleEmptyParkSpaceSelected = onMotorcycleEmptyParkSpaceSelected
-                )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                MotorcycleHeader()
+                LazyColumn(
+                    modifier, horizontalAlignment = Alignment.CenterHorizontally,
+                    contentPadding = PaddingValues(top = 8.dp)
+                ) {
+                    motorcycleSpacesBody(
+                        motorcycleSpacesFilled = motorcycleSpacesFilled,
+                        onMotorcycleRegisteredSpaceSelected = onMotorcycleRegisteredSpaceSelected,
+                        onMotorcycleEmptyParkSpaceSelected = onMotorcycleEmptyParkSpaceSelected
+                    )
+                }
             }
         }
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .background(Color.Yellow)
-                .weight(1f)
+                .background(Color.White)
+                .weight(2f)
                 .padding(8.dp),
             contentAlignment = Alignment.TopEnd
         ) {
-            LazyColumn(modifier) {
-                carSpacesBody(
-                    carSpacesFilled = carSpacesFilled,
-                    onCarRegisteredSpaceSelected = onCarRegisteredSpaceSelected,
-                    onCarEmptyParkSpaceSelected = onCarEmptyParkSpaceSelected
-                )
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                CarHeader()
+                LazyVerticalGrid(
+                    modifier = modifier,
+                    cells = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(top = 8.dp)
+                ) {
+                    carSpacesBody(
+                        carSpacesFilled = carSpacesFilled,
+                        onCarRegisteredSpaceSelected = onCarRegisteredSpaceSelected,
+                        onCarEmptyParkSpaceSelected = onCarEmptyParkSpaceSelected
+                    )
+                }
             }
+
         }
     }
 }
@@ -146,7 +158,7 @@ fun ParkingScreenLoading() {
         ParkingScreen(
             parkingState = ParkingUiState.ParkingLoadingState,
             modifier = Modifier,
-            {}, {},{}, {}
+            {}, {}, {}, {}
         )
     }
 }
@@ -162,7 +174,7 @@ fun ParkingScreenError() {
         ParkingScreen(
             parkingState = ParkingUiState.ParkingErrorState(errorMsg = stringResource(id = R.string.activity_parking_msg_error)),
             modifier = Modifier,
-            {}, {},{}, {}
+            {}, {}, {}, {}
         )
     }
 }

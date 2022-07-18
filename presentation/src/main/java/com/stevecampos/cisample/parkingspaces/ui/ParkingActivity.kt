@@ -43,7 +43,11 @@ fun ParkingNavController() {
             },
             onMotorcycleRegisteredSpaceSelected = {}
         )
-        registerCarGraph {}
-        registerMotorcycleGraph { }
+        registerCarGraph {
+            navController.popBackStack()
+        }
+        registerMotorcycleGraph {
+            navController.popBackStack()
+        }
     }
 }

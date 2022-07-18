@@ -2,6 +2,7 @@ package com.stevecampos.cisample.register.motorcycle.ui
 
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -12,7 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.stevecampos.cisample.register.motorcycle.vm.RegisterMotorcycleViewModel
+import androidx.compose.ui.text.input.KeyboardType
+import com.stevecampos.cisample.register.motorcycle.viewmodel.RegisterMotorcycleViewModel
 import com.stevecampos.cisample.shared.composecomponents.FailedToLoadWidget
 import com.stevecampos.cisample.shared.composecomponents.LoadingWidget
 import org.koin.androidx.compose.get
@@ -96,7 +98,7 @@ fun RegisterMotorcycleForm(
         item {
             TextField(
                 value = motorcyclePlateText.value,
-                onValueChange = { motorcyclePlateText.value = it },
+                onValueChange = { if (it.length <= 6) motorcyclePlateText.value = it },
                 label = {
                     Text(text = "Motorcycle's Plate")
                 }
@@ -105,7 +107,8 @@ fun RegisterMotorcycleForm(
         item {
             TextField(
                 value = motorcycleCylinderCapacityText.value,
-                onValueChange = { motorcycleCylinderCapacityText.value = it },
+                onValueChange = { if (it.length <= 4) motorcycleCylinderCapacityText.value = it },
+                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 label = {
                     Text(text = "Motorcycle's Cylinder Capacity")
                 }

@@ -2,8 +2,8 @@ package com.stevecampos.cisample
 
 import com.stevecampos.cisample.car.FakeCarParkingSpaceService
 import com.stevecampos.cisample.car.FakeCarRegisterService
-import com.stevecampos.cisample.parkingspaces.vm.ParkingUiState
-import com.stevecampos.cisample.parkingspaces.vm.ParkingViewModel
+import com.stevecampos.cisample.parkingspaces.viewmodel.ParkingUiState
+import com.stevecampos.cisample.parkingspaces.viewmodel.ParkingViewModel
 import com.stevecampos.cisample.motorcycle.FakeMotorcycleParkingSpaceService
 import com.stevecampos.cisample.motorcycle.FakeMotorcycleRegisterService
 import kotlinx.coroutines.Dispatchers

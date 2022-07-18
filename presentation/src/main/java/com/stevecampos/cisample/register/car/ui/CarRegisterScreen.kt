@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.stevecampos.cisample.R
-import com.stevecampos.cisample.register.car.vm.RegisterCarViewModel
+import com.stevecampos.cisample.register.car.viewmodel.RegisterCarViewModel
 import com.stevecampos.cisample.shared.composecomponents.FailedToLoadWidget
 import com.stevecampos.cisample.shared.composecomponents.LoadingWidget
 import org.koin.androidx.compose.get
@@ -96,7 +96,7 @@ fun RegisterCarForm(
         item {
             TextField(
                 value = carPlateText.value,
-                onValueChange = { carPlateText.value = it },
+                onValueChange = { if (it.length <= 6) carPlateText.value = it },
                 label = {
                     Text(text = "Car's Plate")
                 }

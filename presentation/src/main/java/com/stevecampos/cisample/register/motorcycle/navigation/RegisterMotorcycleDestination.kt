@@ -6,7 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.stevecampos.cisample.register.motorcycle.ui.RegisterMotorcycleRoute
-import com.stevecampos.cisample.register.motorcycle.vm.RegisterMotorcycleViewModel
+import com.stevecampos.cisample.register.motorcycle.viewmodel.RegisterMotorcycleViewModel
 import org.koin.androidx.compose.get
 
 class RegisterMotorcycleDestination {

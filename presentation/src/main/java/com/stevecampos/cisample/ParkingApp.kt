@@ -24,11 +24,11 @@ class ParkingApp : Application() {
             androidContext(this@ParkingApp)
             modules(
                 databaseModule,
-                parkingSpaceModule,
                 carParkingSpaceModule,
                 motorcycleParkingSpaceModule,
                 registerCarModule,
-                registerMotorcycleModule
+                registerMotorcycleModule,
+                parkingSpaceModule
             )
         }
     }

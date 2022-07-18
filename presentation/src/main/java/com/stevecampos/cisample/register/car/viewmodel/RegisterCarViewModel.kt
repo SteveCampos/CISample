@@ -1,14 +1,15 @@
-package com.stevecampos.cisample.register.car.vm
+package com.stevecampos.cisample.register.car.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.stevecampos.cisample.parkingspaces.vm.executeTask
+import com.stevecampos.cisample.parkingspaces.viewmodel.executeTask
 import com.stevecampos.cisample.register.car.ui.RegisterCarUiState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.service.CarRegisterService
 import com.stevecampos.domain.vehicle.entity.Car
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.time.Instant
 import java.util.*
 
 class RegisterCarViewModel(
@@ -36,7 +37,7 @@ class RegisterCarViewModel(
 
             val car = Car(plate)
             val parkingSpace = ParkingSpace(parkingSpaceId)
-            val date = Date(1657477970)
+            val date = Date.from(Instant.now())
             carRegisterService.register(car, parkingSpace, date)
         }
 

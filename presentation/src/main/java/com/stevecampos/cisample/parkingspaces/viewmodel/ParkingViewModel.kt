@@ -1,4 +1,4 @@
-package com.stevecampos.cisample.parkingspaces.vm
+package com.stevecampos.cisample.parkingspaces.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -54,8 +54,10 @@ class ParkingViewModel(
         val motoSpaces = motorcycleParkingSpaceService.getParkingSpaces()
         val carRegisteredSpaces = carRegisterService.getRegisteredSpaces()
         val motoRegisteredSpaces = motorcycleRegisterService.getRegisteredSpaces()
-
-
+        Log.d(TAG, "carSpaces: ${carSpaces.size}")
+        Log.d(TAG, "motoSpaces: ${motoSpaces.size}")
+        Log.d(TAG, "carRegisteredSpaces: ${carRegisteredSpaces.size}")
+        Log.d(TAG, "motoRegisteredSpaces: ${motoRegisteredSpaces.size}")
         val carSpacesFilled: List<Pair<ParkingSpace, RegisteredSpace<Car>?>> =
             carSpaces.map { parkingSpace ->
                 val registeredSpace =

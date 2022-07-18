@@ -9,13 +9,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.stevecampos.cisample.R
 import com.stevecampos.domain.register.entity.ParkingSpace
 
 @Composable
 fun LoadingWidget() {
-    Box(modifier = Modifier.fillMaxSize().testTag("LoadingWidgetTestTag")) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .semantics { contentDescription = "Loading Indicator" }
+    ) {
         CircularProgressIndicator(Modifier.align(Alignment.Center))
     }
 }
@@ -23,7 +28,11 @@ fun LoadingWidget() {
 @Composable
 fun FailedToLoadWidget(errorTxt: String, onRefreshBttnClicked: () -> Unit) {
     Column(
-        modifier = Modifier.fillMaxWidth().testTag("FailedToLoadWidgetTestTag"),
+        modifier = Modifier
+            .fillMaxWidth()
+            .semantics {
+                contentDescription = "Error Widget"
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -61,6 +70,7 @@ fun CardItem(title: String, onItemClicked: () -> Unit = {}) {
         }
     }
 }
+
 @Composable
 fun EmptyParkingSpace(
     parkingSpace: ParkingSpace,
