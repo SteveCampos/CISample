@@ -29,6 +29,12 @@ android {
             testCoverageEnabled true
         }
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            unitTests.returnDefaultValues = true
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -58,7 +64,6 @@ task jacocoTestReport(type: JacocoReport,
     reports {
         xml.required = true
         html.required = true
-        xml.destination(file("../domain/build/reports/jacocoTestReport.xml"))
     }
 
     def excludes = ['**/R.class',
@@ -75,13 +80,13 @@ task jacocoTestReport(type: JacocoReport,
                     '**/di/']
 
     def debugTree = fileTree(
-            dir: "../domain/build/intermediates/javac/debug/classes/de" +
+            dir: "../presentation/build/intermediates/javac/debug/classes/de" +
                     "/logerbyte/jacocotest/javaClasses",
             excludes: excludes)
     def kotlinDebugTree = fileTree(
-            dir: "../domain/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
+            dir: "../presentation/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
             excludes: excludes)
-    def mainSrc = "../domain/src/main/java"
+    def mainSrc = "../presentation/src/main/java"
 /*
     for other modules
     def debugTreeMyLib = fileTree(
@@ -106,8 +111,8 @@ task jacocoTestReport(type: JacocoReport,
     executionData.setFrom(files(
             //"../mylibrary/build/jacoco/testDebugUnitTest.exec",
             //"app/build/jacoco/testDebugUnitTest.exec",
-            "../domain/build/jacoco/testDebugUnitTest.exec",
-            '../domain/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec'
+            "../presentation/build/jacoco/testDebugUnitTest.exec",
+            '../presentation/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec'
     ))
 }
 
