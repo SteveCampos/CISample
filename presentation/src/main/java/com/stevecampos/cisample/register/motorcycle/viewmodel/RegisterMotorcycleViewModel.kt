@@ -41,7 +41,7 @@ class RegisterMotorcycleViewModel(
 
             val motorcycle = Motorcycle(plate, cylinderCapacity.toInt())
             val parkingSpace = ParkingSpace(parkingSpaceId)
-            val date = Date.from(Instant.now())
+            val date = Calendar.getInstance().time
             motorcycleRegisterService.register(motorcycle, parkingSpace, date)
         }
 

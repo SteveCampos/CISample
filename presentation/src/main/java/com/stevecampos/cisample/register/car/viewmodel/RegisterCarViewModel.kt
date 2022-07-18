@@ -37,7 +37,8 @@ class RegisterCarViewModel(
 
             val car = Car(plate)
             val parkingSpace = ParkingSpace(parkingSpaceId)
-            val date = Date.from(Instant.now())
+            val date = Calendar.getInstance().time
+
             carRegisterService.register(car, parkingSpace, date)
         }
 
