@@ -58,7 +58,7 @@ task jacocoTestReport(type: JacocoReport,
     reports {
         xml.required = true
         html.required = true
-        xml.destination(file("build/reports/jacocoTestReport.xml"))
+        xml.destination(file("../domain/build/reports/jacocoTestReport.xml"))
     }
 
     def excludes = ['**/R.class',
