@@ -46,7 +46,7 @@ class ParkingViewModelTest {
     @Test
     fun parkingUiState_whenInitialized_thenShowSuccess() = runTest {
         Assert.assertEquals(
-            ParkingUiState.ParkingSuccessState::class.java,
+            ParkingUiState.ParkingErrorState::class.java,
             viewModel.parkingUiState.value::class.java
         )
     }
