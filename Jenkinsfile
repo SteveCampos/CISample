@@ -26,9 +26,11 @@ pipeline {
   stage('Unit Tests') {
     steps{
       echo "------------>Unit Tests<------------"
+      sh 'mkdir -p /presentation/build/outputs/androidTest-results/connected/'
       sh './gradlew clean'
       sh './gradlew test'
-      sh './gradlew jacocoTestReport'
+      sh './gradlew presentation:connectedAndroidTest --debug'
+      sh './gradlew jacocoTestReport '
     }
   }
 
