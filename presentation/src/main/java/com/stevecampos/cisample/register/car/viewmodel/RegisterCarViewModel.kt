@@ -1,31 +1,43 @@
 package com.stevecampos.cisample.register.car.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.stevecampos.cisample.parkingspaces.viewmodel.executeTask
+import com.stevecampos.cisample.register.car.navigation.RegisterCarDestination
 import com.stevecampos.cisample.register.car.ui.RegisterCarUiState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.service.CarRegisterService
 import com.stevecampos.domain.vehicle.entity.Car
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.time.Instant
 import java.util.*
+import javax.inject.Inject
 
-class RegisterCarViewModel(
-    //savedStateHandle: SavedStateHandle,
-    private val parkingSpaceId: Int,
+@HiltViewModel
+class RegisterCarViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    //private val parkingSpaceId: Int,
     private val carRegisterService: CarRegisterService
 ) : ViewModel() {
 
     private val _registerCarViewState =
-        MutableStateFlow<RegisterCarUiState>(RegisterCarUiState.RegisterCarInit(parkingSpaceId))
+        MutableStateFlow<RegisterCarUiState>(
+            RegisterCarUiState.RegisterCarInit(
+                checkNotNull(
+                    savedStateHandle[RegisterCarDestination.parkingSpaceIdArg]
+                )
+            )
+        )
     val registerCarViewState: StateFlow<RegisterCarUiState>
         get() = _registerCarViewState
 
-    /*private val parkingSpaceId: Int = checkNotNull(
-        savedStateHandle[RegisterCarDestination.parkingSpaceIdArg]
-    )*/
+    private val parkingSpaceId: Int by lazy {
+        checkNotNull(
+            savedStateHandle[RegisterCarDestination.parkingSpaceIdArg]
+        )
+    }
 
     fun registerCar(plate: String, dateStr: String) {
         Log.d(TAG, "registerCar")

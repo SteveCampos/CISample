@@ -1,17 +1,20 @@
 package com.stevecampos.cisample.parkingspaces.dependencyinjection
 
-import com.stevecampos.cisample.parkingspaces.viewmodel.ParkingViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
-import org.koin.dsl.module
+import com.stevecampos.domain.register.service.*
+import com.stevecampos.domain.vehicle.entity.Car
+import com.stevecampos.domain.vehicle.entity.Motorcycle
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
-val parkingSpaceModule = module {
-    viewModel {
-        ParkingViewModel(
-            get(named("CarParkingSpaceService")),
-            get(named("MotorcycleParkingSpaceService")),
-            get(),
-            get()
-        )
-    }
+@Module
+@InstallIn(SingletonComponent::class)
+object ParkingSpaceModule {
+    @Provides
+    fun provideCarParkingSpaceService(): ParkingSpaceService<Car> = CarParkingSpaceService()
+
+    @Provides
+    fun provideMotorcycleParkingSpaceService(): ParkingSpaceService<Motorcycle> =
+        MotorcycleParkingSpaceService()
 }

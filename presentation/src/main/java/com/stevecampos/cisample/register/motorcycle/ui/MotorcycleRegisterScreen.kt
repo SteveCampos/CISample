@@ -14,16 +14,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.stevecampos.cisample.register.motorcycle.viewmodel.RegisterMotorcycleViewModel
 import com.stevecampos.cisample.shared.composecomponents.FailedToLoadWidget
 import com.stevecampos.cisample.shared.composecomponents.LoadingWidget
-import org.koin.androidx.compose.get
 
 @Composable
 fun RegisterMotorcycleRoute(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RegisterMotorcycleViewModel = get()
+    viewModel: RegisterMotorcycleViewModel = hiltViewModel()
 ) {
     val uiState: RegisterMotorcycleUiState by viewModel.registerMotorcycleViewState.collectAsState()
 

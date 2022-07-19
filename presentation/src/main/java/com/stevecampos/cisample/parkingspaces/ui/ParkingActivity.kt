@@ -13,7 +13,10 @@ import com.stevecampos.cisample.register.car.navigation.registerCarGraph
 import com.stevecampos.cisample.register.motorcycle.navigation.RegisterMotorcycleDestination
 import com.stevecampos.cisample.register.motorcycle.navigation.registerMotorcycleGraph
 import com.stevecampos.cisample.shared.theme.CISampleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class ParkingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,35 +1,40 @@
 package com.stevecampos.cisample.register.motorcycle.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.stevecampos.cisample.parkingspaces.viewmodel.executeTask
+import com.stevecampos.cisample.register.motorcycle.navigation.RegisterMotorcycleDestination
 import com.stevecampos.cisample.register.motorcycle.ui.RegisterMotorcycleUiState
 import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.service.MotorcycleRegisterService
 import com.stevecampos.domain.vehicle.entity.Motorcycle
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import java.time.Instant
 import java.util.*
+import javax.inject.Inject
 
-class RegisterMotorcycleViewModel(
-    //savedStateHandle: SavedStateHandle,
-    private val parkingSpaceId: Int,
+@HiltViewModel
+class RegisterMotorcycleViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val motorcycleRegisterService: MotorcycleRegisterService
 ) : ViewModel() {
 
     private val _registerMotorcycleViewState =
         MutableStateFlow<RegisterMotorcycleUiState>(
             RegisterMotorcycleUiState.RegisterMotorcycleInit(
-                parkingSpaceId
+                checkNotNull(
+                    savedStateHandle[RegisterMotorcycleDestination.parkingSpaceIdArg]
+                )
             )
         )
     val registerMotorcycleViewState: StateFlow<RegisterMotorcycleUiState>
         get() = _registerMotorcycleViewState
 
-    /*private val parkingSpaceId: Int = checkNotNull(
+    private val parkingSpaceId: Int = checkNotNull(
         savedStateHandle[RegisterMotorcycleDestination.parkingSpaceIdArg]
-    )*/
+    )
 
     fun registerMotorcycle(plate: String, cylinderCapacity: String, dateStr: String) {
         Log.d(TAG, "registerMotorcycle")

@@ -13,17 +13,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.stevecampos.cisample.R
 import com.stevecampos.cisample.register.car.viewmodel.RegisterCarViewModel
 import com.stevecampos.cisample.shared.composecomponents.FailedToLoadWidget
 import com.stevecampos.cisample.shared.composecomponents.LoadingWidget
-import org.koin.androidx.compose.get
 
 @Composable
 fun RegisterCarRoute(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: RegisterCarViewModel = get()
+    viewModel: RegisterCarViewModel = hiltViewModel()
 ) {
     val uiState: RegisterCarUiState by viewModel.registerCarViewState.collectAsState()
 

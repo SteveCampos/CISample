@@ -6,8 +6,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.stevecampos.cisample.register.motorcycle.ui.RegisterMotorcycleRoute
-import com.stevecampos.cisample.register.motorcycle.viewmodel.RegisterMotorcycleViewModel
-import org.koin.androidx.compose.get
 
 class RegisterMotorcycleDestination {
     companion object {
@@ -27,15 +25,8 @@ fun NavGraphBuilder.registerMotorcycleGraph(
             }
         )
     ) {
-        val parkingSpaceId = it.arguments?.getInt(RegisterMotorcycleDestination.parkingSpaceIdArg) ?: 0
-        Log.d("registerMotorcycleGraph", "parkingSpaceIdArg ${it.arguments}, ${it.savedStateHandle}")
         RegisterMotorcycleRoute(
-            onBackClick = onBackClick,
-            viewModel = RegisterMotorcycleViewModel(
-                parkingSpaceId,
-                //savedStateHandle = it.savedStateHandle,
-                get()
-            )
+            onBackClick = onBackClick
         )
     }
 }

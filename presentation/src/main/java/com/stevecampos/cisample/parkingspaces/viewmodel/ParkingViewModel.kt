@@ -12,10 +12,13 @@ import com.stevecampos.domain.register.entity.ParkingSpace
 import com.stevecampos.domain.register.service.*
 import com.stevecampos.domain.vehicle.entity.Car
 import com.stevecampos.domain.vehicle.entity.Motorcycle
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
-class ParkingViewModel(
+@HiltViewModel
+class ParkingViewModel @Inject constructor(
     private val carParkingService: ParkingSpaceService<Car>,
     private val motorcycleParkingSpaceService: ParkingSpaceService<Motorcycle>,
     private val carRegisterService: CarRegisterService,
@@ -28,10 +31,9 @@ class ParkingViewModel(
         get() = _parkingUiState
 
     init {
-        getParkingSpaces()
     }
 
-    private fun getParkingSpaces() {
+    fun getParkingSpaces() {
         executeTask(
             ::onGetParkingSpacesSuccess,
             ::onGetParkingSpacesFailed
