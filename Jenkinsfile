@@ -26,7 +26,6 @@ pipeline {
   stage('Unit Tests') {
     steps{
       echo "------------>Unit Tests<------------"
-      sh './gradlew createAndroidTestOutputDirectoryIfDontExists'
       sh './gradlew clean'
       sh './gradlew test'
       sh 'env ANDROID_SERIAL=emulator-5556 ./gradlew presentation:connectedAndroidTest --info'
@@ -55,7 +54,7 @@ pipeline {
     }
     success {
       echo 'This will run only if successful'
-      junit testResults: 'app/build/test-results/**/TEST-*.xml'
+      junit testResults: 'presentation/build/test-results/**/TEST-*.xml'
       mail (to: 'steve.campos@ceiba.com.co',subject: "Success Pipeline:${currentBuild.fullDisplayName}",body: "Success pipeline ${env.BUILD_URL}")
     }
     failure {
