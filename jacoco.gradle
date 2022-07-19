@@ -64,6 +64,8 @@ task jacocoTestReport(type: JacocoReport) {
     executionData.setFrom(files(
             //"mylibrary/build/jacoco/testDebugUnitTest.exec",
             //"app/build/jacoco/testDebugUnitTest.exec",
+            "../domain/build/jacoco/testDebugUnitTest.exec",
+            '../domain/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
             "infraestructure/build/jacoco/testDebugUnitTest.exec",
             'infraestructure/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
             "presentation/build/jacoco/testDebugUnitTest.exec",
