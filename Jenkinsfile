@@ -29,8 +29,8 @@ pipeline {
       sh './gradlew createAndroidTestOutputDirectoryIfDontExists'
       sh './gradlew clean'
       sh './gradlew test'
-      sh './gradlew presentation:connectedAndroidTest --info'
-      sh './gradlew jacocoTestReport '
+      sh 'env ANDROID_SERIAL=emulator-5556 ./gradlew presentation:connectedAndroidTest --info'
+      sh 'env ANDROID_SERIAL=emulator-5556 ./gradlew jacocoTestReport'
     }
   }
 
