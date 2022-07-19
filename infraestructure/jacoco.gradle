@@ -1,13 +1,13 @@
-task jacocoTestReport(type: JacocoReport) {
-    dependsOn subprojects*.tasks*.findByName('testDebugUnitTest').minus(null)
-    dependsOn subprojects*.tasks*.findByName('createDebugCoverageReport').minus(null)
+task jacocoTestReport(type: JacocoReport,
+        dependsOn: ['testDebugUnitTest',
+                    'createDebugCoverageReport']) {
     group = "Reporting"
     description = "Generate Jacoco coverage reports for Debug build"
 
     reports {
         xml.required = true
-        html.required = true
-        xml.destination file("report-jacoco.xml")
+        html.required = false
+        xml.destination file("build/reports/report-jacoco.xml")
     }
 
     def excludes = ['**/R.class',
@@ -24,31 +24,31 @@ task jacocoTestReport(type: JacocoReport) {
                     '**/di/']
 
     def presentationDebugTree = fileTree(
-            dir: "presentation/build/intermediates/javac/debug/classes/de" +
+            dir: "../presentation/build/intermediates/javac/debug/classes/de" +
                     "/logerbyte/jacocotest/javaClasses",
             excludes: excludes)
     def presentationKotlinDebugTree = fileTree(
-            dir: "presentation/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
+            dir: "../presentation/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
             excludes: excludes)
     def presentationSrc = "presentation/src/main/java"
 
     def domainDebugTree = fileTree(
-            dir: "domain/build/intermediates/javac/debug/classes/de" +
+            dir: "../domain/build/intermediates/javac/debug/classes/de" +
                     "/logerbyte/jacocotest/javaClasses",
             excludes: excludes)
     def domainKotlinDebugTree = fileTree(
-            dir: "domain/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
+            dir: "../domain/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
             excludes: excludes)
-    def domainSrc = "domain/src/main/java"
+    def domainSrc = "../domain/src/main/java"
 
     def infraestructureDebugTree = fileTree(
-            dir: "infraestructure/build/intermediates/javac/debug/classes/de" +
+            dir: "../infraestructure/build/intermediates/javac/debug/classes/de" +
                     "/logerbyte/jacocotest/javaClasses",
             excludes: excludes)
     def infraestructureKotlinDebugTree = fileTree(
-            dir: "infraestructure/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
+            dir: "../infraestructure/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
             excludes: excludes)
-    def infraestructureSrc = "infraestructure/src/main/java"
+    def infraestructureSrc = "../infraestructure/src/main/java"
 
 
     classDirectories.setFrom(files(
@@ -64,10 +64,10 @@ task jacocoTestReport(type: JacocoReport) {
     executionData.setFrom(files(
             //"mylibrary/build/jacoco/testDebugUnitTest.exec",
             //"app/build/jacoco/testDebugUnitTest.exec",
-            "infraestructure/build/jacoco/testDebugUnitTest.exec",
-            'infraestructure/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
-            "presentation/build/jacoco/testDebugUnitTest.exec",
-            'presentation/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec'
+            "../infraestructure/build/jacoco/testDebugUnitTest.exec",
+            '../infraestructure/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
+            "../presentation/build/jacoco/testDebugUnitTest.exec",
+            '../presentation/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec'
     ))
     additionalSourceDirs.setFrom(
             files(
