@@ -29,7 +29,7 @@ pipeline {
       sh './gradlew createAndroidTestOutputDirectoryIfDontExists'
       sh './gradlew clean'
       sh './gradlew test'
-      sh './gradlew presentation:connectedAndroidTest --debug'
+      sh './gradlew presentation:connectedAndroidTest --info'
       sh './gradlew jacocoTestReport '
     }
   }
