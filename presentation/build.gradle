@@ -54,6 +54,16 @@ android {
         }
     }
 }
+task createAndroidTestOutputDirectoryIfDontExists(){
+    // Create a File object representing the folder 'A/B'
+    def folder = new File( '/build/outputs/androidTest-results/connected/' )
+
+// If it doesn't exist
+    if( !folder.exists() ) {
+        // Create all folders up-to and including B
+        folder.mkdirs()
+    }
+}
 
 task jacocoTestReport(type: JacocoReport,
         dependsOn: ['testDebugUnitTest',
