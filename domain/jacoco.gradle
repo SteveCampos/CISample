@@ -23,15 +23,6 @@ task jacocoTestReport(type: JacocoReport,
                     'android/**/*.*',
                     '**/di/']
 
-    def presentationDebugTree = fileTree(
-            dir: "../presentation/build/intermediates/javac/debug/classes/de" +
-                    "/logerbyte/jacocotest/javaClasses",
-            excludes: excludes)
-    def presentationKotlinDebugTree = fileTree(
-            dir: "../presentation/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
-            excludes: excludes)
-    def presentationSrc = "presentation/src/main/java"
-
     def domainDebugTree = fileTree(
             dir: "../domain/build/intermediates/javac/debug/classes/de" +
                     "/logerbyte/jacocotest/javaClasses",
@@ -41,41 +32,17 @@ task jacocoTestReport(type: JacocoReport,
             excludes: excludes)
     def domainSrc = "../domain/src/main/java"
 
-    def infraestructureDebugTree = fileTree(
-            dir: "../infraestructure/build/intermediates/javac/debug/classes/de" +
-                    "/logerbyte/jacocotest/javaClasses",
-            excludes: excludes)
-    def infraestructureKotlinDebugTree = fileTree(
-            dir: "../infraestructure/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
-            excludes: excludes)
-    def infraestructureSrc = "../infraestructure/src/main/java"
 
-
-    classDirectories.setFrom(files(
-            [presentationDebugTree], [presentationKotlinDebugTree]
-            , [domainDebugTree], [domainKotlinDebugTree]
-            , [infraestructureDebugTree], [infraestructureKotlinDebugTree]
-    ))
-    sourceDirectories.setFrom(files(
-            [presentationSrc]
-            , [domainSrc]
-            , [infraestructureSrc]
-    ))
-    executionData.setFrom(files(
-            //"mylibrary/build/jacoco/testDebugUnitTest.exec",
-            //"app/build/jacoco/testDebugUnitTest.exec",
-            "../domain/build/jacoco/testDebugUnitTest.exec",
-            '../domain/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
-            "../infraestructure/build/jacoco/testDebugUnitTest.exec",
-            '../infraestructure/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
-            "../presentation/build/jacoco/testDebugUnitTest.exec",
-            '../presentation/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec'
-    ))
-    additionalSourceDirs.setFrom(
+    classDirectories.setFrom(files( [domainDebugTree], [domainKotlinDebugTree]))
+    sourceDirectories.setFrom(files([domainSrc]))
+    executionData.setFrom(
             files(
-                    [presentationSrc]
-                    , [domainSrc]
-                    , [infraestructureSrc]
+            //"../domain/build/jacoco/testDebugUnitTest.exec",
+            //'../domain/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
+            '../domain/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
             )
+    )
+    additionalSourceDirs.setFrom(
+            files([domainSrc])
     )
 }

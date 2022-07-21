@@ -24,56 +24,27 @@ task jacocoTestReport(type: JacocoReport,
                     '**/di/']
 
     def presentationDebugTree = fileTree(
-            dir: "../presentation/build/intermediates/javac/debug/classes/de" +
-                    "/logerbyte/jacocotest/javaClasses",
+            dir: "../presentation/build/intermediates/javac/debug/classes",
             excludes: excludes)
     def presentationKotlinDebugTree = fileTree(
-            dir: "../presentation/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
+            dir: "../presentation/build/tmp/kotlin-classes/debug",
             excludes: excludes)
     def presentationSrc = "presentation/src/main/java"
 
-    def domainDebugTree = fileTree(
-            dir: "../domain/build/intermediates/javac/debug/classes/de" +
-                    "/logerbyte/jacocotest/javaClasses",
-            excludes: excludes)
-    def domainKotlinDebugTree = fileTree(
-            dir: "../domain/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
-            excludes: excludes)
-    def domainSrc = "../domain/src/main/java"
-
-    def infraestructureDebugTree = fileTree(
-            dir: "../infraestructure/build/intermediates/javac/debug/classes/de" +
-                    "/logerbyte/jacocotest/javaClasses",
-            excludes: excludes)
-    def infraestructureKotlinDebugTree = fileTree(
-            dir: "../infraestructure/build/tmp/kotlin-classes/debug/de/logerbyte/jacocotest",
-            excludes: excludes)
-    def infraestructureSrc = "../infraestructure/src/main/java"
 
 
-    classDirectories.setFrom(files(
-            [presentationDebugTree], [presentationKotlinDebugTree]
-            , [domainDebugTree], [domainKotlinDebugTree]
-            , [infraestructureDebugTree], [infraestructureKotlinDebugTree]
+    classDirectories.setFrom(files([presentationDebugTree], [presentationKotlinDebugTree]
     ))
     sourceDirectories.setFrom(files(
             [presentationSrc]
-            , [domainSrc]
-            , [infraestructureSrc]
     ))
     executionData.setFrom(files(
-            //"mylibrary/build/jacoco/testDebugUnitTest.exec",
-            //"app/build/jacoco/testDebugUnitTest.exec",
-            "../infraestructure/build/jacoco/testDebugUnitTest.exec",
-            '../infraestructure/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec',
             "../presentation/build/jacoco/testDebugUnitTest.exec",
             '../presentation/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec'
     ))
     additionalSourceDirs.setFrom(
             files(
                     [presentationSrc]
-                    , [domainSrc]
-                    , [infraestructureSrc]
             )
     )
 }
