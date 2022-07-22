@@ -1,45 +1,4 @@
-/*
-
-        dependsOn: ['testDebugUnitTest',
-                    'createDebugCoverageReport']) {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports for Debug build"
-
-    reports {
-        xml.required = true
-        html.required = false
-        xml.destination file("build/reports/report-jacoco.xml")
-    }
-
-
-    def presentationDebugTree = fileTree(
-            dir: "../presentation/build/intermediates/javac/debug/classes",
-            excludes: excludes)
-    def presentationKotlinDebugTree = fileTree(
-            dir: "../presentation/build/tmp/kotlin-classes/debug",
-            excludes: excludes)
-    def presentationSrc = "presentation/src/main/java"
-
-
-
-    classDirectories.setFrom(files([presentationDebugTree], [presentationKotlinDebugTree]
-    ))
-    sourceDirectories.setFrom(files(
-            [presentationSrc]
-    ))
-    executionData.setFrom(files(
-            "../presentation/build/jacoco/testDebugUnitTest.exec",
-            '../presentation/build/outputs/code_coverage/debugAndroidTest/connected/**coverage.ec'
-    ))
-    additionalSourceDirs.setFrom(
-            files(
-                    [presentationSrc]
-            )
-    )
-}
-*/
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['connectedAndroidTest','testDebugUnitTest',':domain:testDebugUnitTest',':infraestructure:testDebugUnitTest']) {
+task jacocoTestReport(type: JacocoReport, dependsOn: ['connectedAndroidTest',':domain:testDebugUnitTest',  ':infraestructure:testDebugUnitTest',':infraestructure:connectedAndroidTest']) {
 
     //Define modules from project
     def domain = project(':domain')
