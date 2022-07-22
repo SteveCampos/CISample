@@ -1,4 +1,5 @@
-task jacocoTestReport(type: JacocoReport,
+/*
+
         dependsOn: ['testDebugUnitTest',
                     'createDebugCoverageReport']) {
     group = "Reporting"
@@ -10,18 +11,6 @@ task jacocoTestReport(type: JacocoReport,
         xml.destination file("build/reports/report-jacoco.xml")
     }
 
-    def excludes = ['**/R.class',
-                    '**/R$*.class',
-                    '**/*$ViewBinder*.*',
-                    '**/*$InjectAdapter*.*',
-                    '**/*Injector*.*',
-                    '**/BuildConfig.*',
-                    '**/Manifest*.*',
-                    '**/*Test*.*',
-//                    '**/*Activity*.*',
-                    '**/CiMattersApplication*.*',
-                    'android/**/*.*',
-                    '**/di/']
 
     def presentationDebugTree = fileTree(
             dir: "../presentation/build/intermediates/javac/debug/classes",
@@ -47,4 +36,44 @@ task jacocoTestReport(type: JacocoReport,
                     [presentationSrc]
             )
     )
+}
+*/
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['connectedAndroidTest','testDebugUnitTest',':domain:testDebugUnitTest',':infraestructure:testDebugUnitTest']) {
+
+    //Define modules from project
+    def domain = project(':domain')
+    def infraestructure = project(':infraestructure')
+
+    //Enable xml and html reports
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+
+    //Filters
+    def fileFilterInfraestructure = ['**/dependencyInjection/','**/movie/httpclient/dto/','**/movie/persistence/entity/','**/movie/anticorruption/']
+    def fileFilterApp = ['**/ui/theme/*']
+    def fileFilterDomain = ['**/domain/exceptions/*']
+
+    //Source directories and define general source
+    def sourceDirectoriesFromApp = fileTree(dir: "${project.projectDir}/src/main/java")
+    def sourceDirectoriesFromInfraestructure = fileTree(dir: "${infraestructure.projectDir}/src/main/java")
+    def sourceDirectoriesFromDomain = fileTree(dir: "${domain.projectDir}/src/main/java")
+    def sourceDirectoriesFromAllModules = layout.files(sourceDirectoriesFromApp,sourceDirectoriesFromDomain,sourceDirectoriesFromInfraestructure)
+    sourceDirectories.setFrom(files([sourceDirectoriesFromAllModules]))
+
+    //Class directories and define general directories
+    def classDirectoriesFromApp = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug")
+    def classDirectoriesFromInfraestructure = fileTree(dir: "${infraestructure.buildDir}/tmp/kotlin-classes/debug")
+    def classDirectoriesFromDomain = fileTree(dir: "${domain.buildDir}/tmp/kotlin-classes/debug")
+    def classDirectoriesFromAllModules = layout.files(classDirectoriesFromApp,classDirectoriesFromDomain,classDirectoriesFromInfraestructure)
+    classDirectories.setFrom(files([classDirectoriesFromAllModules]))
+
+    //Execution files from test task
+    def executionFileFromUnitTestInApp = fileTree(dir: "$buildDir", includes: ["outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec","outputs/code_coverage/debugAndroidTest/connected/**coverage.ec"])
+    def executionFileFromUnitTestInDomain = fileTree(dir: "$domain.buildDir", includes: ["jacoco/testDebugUnitTest.exec"])
+    def executionFileFromUnitTestInInfraestructure = fileTree(dir: "$infraestructure.buildDir", includes: ["jacoco/testDebugUnitTest.exec"])
+    def executionFiles = layout.files(executionFileFromUnitTestInApp,executionFileFromUnitTestInDomain,executionFileFromUnitTestInInfraestructure)
+    executionData.setFrom(executionFiles.asFileTree)
 }
