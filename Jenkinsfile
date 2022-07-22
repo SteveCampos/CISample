@@ -27,8 +27,6 @@ pipeline {
     steps{
       echo "------------>Unit Tests<------------"
       sh './gradlew clean'
-      sh './gradlew test'
-      sh 'env ANDROID_SERIAL=emulator-5556 ./gradlew presentation:connectedAndroidTest --info'
       sh 'env ANDROID_SERIAL=emulator-5556 ./gradlew jacocoTestReport'
     }
   }
@@ -38,9 +36,6 @@ pipeline {
       echo '------------>Análisis de código estático<------------'
       withSonarQubeEnv('Sonar') {
         sh "${tool name: 'SonarScanner-Mac', type:'hudson.plugins.sonar.SonarRunnerInstallation'}/bin/sonar-scanner"
-
-        echo "SONAR_HOST_URL:$SONAR_HOST_URL"
-        echo "SONAR_AUTH_TOKEN:$SONAR_AUTH_TOKEN"
       }
     }
   }
